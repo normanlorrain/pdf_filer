@@ -19,11 +19,42 @@ pdfFile = None
 
 img = None
 src = config.config['INPUT']['SOURCE']
-for fname in glob.glob(f'{src}\\*.pdf'):
+
+
+fileList = {}
+
+
+def init():
+    global fileIterator 
+    listFiles()
+    scanFiles()
+    fileIterator = iter(fileList)
+
+# def getNextFile():
+#     for item in  fileList.items():
+#         print(f"getNextFile: {item}")
+#         yield item
+        
+
+
+def listFiles():
+    for fname in glob.glob(f'{src}\\*.pdf'):
+        fileList[fname] = None
+
+def scanFiles():
+    for fname in fileList:
+        scanFile(fname)
+
+
+def scanFile(fname):
     print(fname, end=' ')
     inputFile = open(fname, "rb")
     bytes = inputFile.read()
     inputFile.close()
+
+    fileList[fname] = scanPDFContents(bytes)
+
+def scanPDFContents(bytes):
 
     doc = fitz.Document(stream=bytes)
     # page = doc.load_page(4)
@@ -48,8 +79,14 @@ for fname in glob.glob(f'{src}\\*.pdf'):
         (last,first) = util.splitName(fullName)
         
         print(f"   NAME:  {last}, {first}")
+        return (last,first)
     else:
         print(f"no name found.")
+        return None
 
 
 
+
+if __name__ == '__main__':
+    init()
+    pass
