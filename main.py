@@ -11,15 +11,15 @@ import sys
 import re
 import glob
 
+import util
+import config
+
+
 pdfFile = None
 
 img = None
-
-src = "M:\\Everyone\\faxes - NL\\"
+src = config.config['INPUT']['SOURCE']
 for fname in glob.glob(f'{src}\\*.pdf'):
-    # fname = "M:\\Everyone\\faxes - NL\\20231023131133-7880_04.pdf"
-    # fname = "M:\\Everyone\\faxes - NL\\20231014083105-2052_05.pdf"
-    # fname = "M:\\Everyone\\faxes - NL\\20231016075314-8757_01.pdf"
     print(fname, end=' ')
     inputFile = open(fname, "rb")
     bytes = inputFile.read()
@@ -45,35 +45,8 @@ for fname in glob.glob(f'{src}\\*.pdf'):
     if match:
         # (last, first) 
         fullName = match.group(1)
-        names = re.findall(r"[\w']+", fullName)
-
-        last=''
-        first=''
-
-        if ',' in fullName:
-            last,first = fullName.split(',')
-            # first = ' '.join(names)
-        elif any(map(str.isupper, names)):
-            for name in names:
-                if name.isupper():
-                    last = name
-                else:
-                    first+=name
-                    first += ' '
-        else:
-            last = names[-1]
-            first = ' '.join(names[:-1])
-
-
-
-        # last = ''
-        # first = ''
-        # for name in names:
-        #     if name.isupper():
-        #         last = name
-
-        last = last.upper().strip()
-        first = first.strip()
+        (last,first) = util.splitName(fullName)
+        
         print(f"   NAME:  {last}, {first}")
     else:
         print(f"no name found.")
