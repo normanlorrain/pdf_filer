@@ -35,32 +35,29 @@ def main(page: ft.Page):
     #     nextFile(fileDetails.path)
 
     def nextFile(e= None):
-        path = next(src.fileIterator)
+
+        try:
+            path = next(src.fileIterator)
+        except StopIteration:
+            dlg = ft.AlertDialog(
+            title=ft.Text("Last file"), on_dismiss=lambda e: print("Dialog dismissed!")
+            )
+            page.dialog = dlg
+            dlg.open = True
+            page.update()
+            src.init()
+            return
+
+
+
         global pdfFile
-        pdfFile = pdf.pdf(path)
+        pdfFile = pdf.pdf(path )
         btnMove.disabled = True
         bntDn.disabled = False
         bntUp.disabled = False
         # btn180.disabled = False
         pageNumber = 0
-        img = pageImage(pageNumber)
-        contentRow.controls.pop(0)
-        contentRow.controls.insert(0,img)
-        page.update()
-
-        name = src.getName(path)
-        if name:
-            (last,first) = name
-        nameList.current.controls.append(ft.Radio(value="red", label="Red"))
-        nameList.current.controls.append(ft.Radio(value="BLUE::BLUE", label="Blue"))
-
-
-
-        page.update()
-        pass
-
-    def pageImage(pageNumber):
-        return ft.Image(
+        img = ft.Image(
             src_base64=pdfFile.get_page(pageNumber),
             # width=pdf.width,
             # height=pdf.height,
@@ -68,6 +65,24 @@ def main(page: ft.Page):
             expand=True,
         )
 
+        contentRow.controls.pop(0)
+        contentRow.controls.insert(0,img)
+        page.update()
+
+        name = src.getNameTuple(path)
+        if name:
+            (last,first) = name
+            nameList.current.controls.clear()
+            nameList.current.controls.append(ft.Radio(value="red", label=f"{last}, {first}"))
+        
+
+
+
+        page.update()
+        pass
+
+    # def pageImage(pageNumber):
+        
     def changePage(down=False):
         global img
         pageNumber = pdfFile.changePage(down)
