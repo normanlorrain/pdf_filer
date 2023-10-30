@@ -5,6 +5,8 @@ import sys
 import src
 
 pdfFile = None
+nameList = ft.Ref[ft.Column]()
+
 
 # We need to catch the window close event, so that we can clean up.  It's not automatic, sadly.
 def page_window(e):
@@ -21,6 +23,7 @@ def main(page: ft.Page):
     page.window_center()
     page.on_window_event = page_window
     page.window_prevent_close = True
+
 
     # def pick_files_result(e: ft.FilePickerResultEvent):
     #     if not e.files:
@@ -44,6 +47,13 @@ def main(page: ft.Page):
         contentRow.controls.pop(0)
         contentRow.controls.insert(0,img)
         page.update()
+
+        name = src.getName(path)
+        if name:
+            (last,first) = name
+        nameList.current.controls.append(ft.Radio(value="red", label="Red"))
+        nameList.current.controls.append(ft.Radio(value="BLUE::BLUE", label="Blue"))
+
 
 
         page.update()
@@ -104,8 +114,13 @@ def main(page: ft.Page):
 
 
     img = ft.Image(None)
-    txtList = ft.Text("destinations go here", bgcolor="#eeeeee", expand=True)
-    contentRow = ft.Row( controls = [img, txtList])
+    # txtList = ft.Text("destinations go here", bgcolor="#eeeeee", expand=True)
+    
+    radios = ft.Column(ref=nameList, controls= None,alignment=ft.MainAxisAlignment.START )
+    # radioGroup = ft.RadioGroup(content = rgc )
+
+    contentRow = ft.Row( controls = [img, radios], vertical_alignment=ft.CrossAxisAlignment.START)
+    
     page.add(contentRow)
 
     page.update()
