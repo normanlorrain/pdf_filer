@@ -32,3 +32,15 @@ def splitName(fullName):
     last = last.upper().strip()
     first = first.strip()
     return (last, first)
+
+
+import datetime
+
+def generateDstName(path, description):
+    format='%Y%m%d'
+    date = datetime.datetime.strptime(path[0:8], format).date()
+    return f'{description} {date.strftime("%b %d %Y")}'
+
+
+if __name__ == '__main__':
+    print(generateDstName('20231014083105-2052_05.pdf', 'Rx sent'))

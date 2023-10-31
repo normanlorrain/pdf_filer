@@ -28,11 +28,11 @@ class pdf:
         pass
 
     # read the page data
-    def get_page(self, pno, zoom=False, max_size=None):
+    def get_page(self, pno):
         global width, height
-
+        zoom = 2
         pixmap = self.doc.get_page_pixmap(
-            pno,
+            pno,matrix=fitz.Matrix(zoom, zoom)
         )  # *, matrix: matrix_like = Identity, dpi=None, colorspace: Colorspace = csRGB, clip: rect_like = None, alpha: bool = False, annots: bool = True)
         width = pixmap.width
         height = pixmap.height

@@ -1,11 +1,10 @@
 import flet as ft
 import pdf
-import sys
-
 import src
+import dst
 
 pdfFile = None
-nameList = ft.Ref[ft.Column]()
+dstCol = ft.Ref[ft.Column]()
 
 
 # We need to catch the window close event, so that we can clean up.  It's not automatic, sadly.
@@ -72,14 +71,25 @@ def main(page: ft.Page):
         name = src.getNameTuple(path)
         if name:
             (last,first) = name
-            nameList.current.controls.clear()
-            nameList.current.controls.append(ft.Radio(value="red", label=f"{last}, {first}"))
-        
+            dstCol.current.controls.clear()
+            dstCol.current.controls.append(ft.Text(f"Name detected: {last}, {first}"))
+            destination = dst.getName(last,first)
+            if destination:
+                dstCol.current.controls.append(ft.Text(f"destination: {destination}", width=300))
+
+            dstCol.current.controls.append(ft.Radio(value="letter", label="Letter"))
+            dstCol.current.controls.append(ft.Radio(value="rx", label="Rx"))
+            dstCol.current.controls.append(ft.Radio(value="other", label="Other"))
+            dstCol.current.controls.append(ft.TextField(label="Other"))
+
+            dstCol.current.controls.append(ft.Text(generateDstName(path)))
+
 
 
 
         page.update()
         pass
+        
 
     # def pageImage(pageNumber):
         
@@ -92,13 +102,6 @@ def main(page: ft.Page):
 
         page.update()
 
-    def rotate(foo):
-        page.controls.pop()
-        pdfFile.rotate()
-        img = pageImage(pdfFile.currentPage)
-        page.add(img)
-        btnMove.disabled = False
-        page.update()
 
     def move(foo):
         print("Saving file")
@@ -131,7 +134,7 @@ def main(page: ft.Page):
     img = ft.Image(None)
     # txtList = ft.Text("destinations go here", bgcolor="#eeeeee", expand=True)
     
-    radios = ft.Column(ref=nameList, controls= None,alignment=ft.MainAxisAlignment.START )
+    radios = ft.Column(ref=dstCol, controls= None,alignment=ft.MainAxisAlignment.START )
     # radioGroup = ft.RadioGroup(content = rgc )
 
     contentRow = ft.Row( controls = [img, radios], vertical_alignment=ft.CrossAxisAlignment.START)
@@ -147,4 +150,5 @@ def start():
 
 if __name__ == "__main__":
     src.init()
+    dst.init()
     start()
