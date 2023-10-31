@@ -2,9 +2,18 @@ import flet as ft
 import pdf
 import src
 import dst
+import util
 
 pdfFile = None
-dstCol = ft.Ref[ft.Column]()
+
+# References to the fields so we can update them
+dstCol = ft.Ref[ft.Column]()               # The right-hand column, containing these:
+nameDetected = ft.Ref[ft.Text]()           #     - The 
+matchRadio = ft.Ref[ft.RadioGroup]()
+fileType = ft.Ref[ft.RadioGroup]()
+fileTypeOther = ft.Ref[ft.TextField]()
+dstName = ft.Ref[ft.Text]()
+
 
 
 # We need to catch the window close event, so that we can clean up.  It's not automatic, sadly.
@@ -82,7 +91,7 @@ def main(page: ft.Page):
             dstCol.current.controls.append(ft.Radio(value="other", label="Other"))
             dstCol.current.controls.append(ft.TextField(label="Other"))
 
-            dstCol.current.controls.append(ft.Text(generateDstName(path)))
+            dstCol.current.controls.append(ft.Text(util.generateDstName(path)))
 
 
 
