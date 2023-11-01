@@ -31,7 +31,7 @@ class pdf:
     def get_page(self, pno):
         global width, height
         zoom = 2
-        pixmap = self.doc.get_page_pixmap(
+        pixmap = self.doc.get_page_pixmap( # type: ignore
             pno,matrix=fitz.Matrix(zoom, zoom)
         )  # *, matrix: matrix_like = Identity, dpi=None, colorspace: Colorspace = csRGB, clip: rect_like = None, alpha: bool = False, annots: bool = True)
         width = pixmap.width
@@ -60,5 +60,5 @@ class pdf:
         self.doc[self.currentPage].set_rotation(new_rotation)
 
     def save(self):
-        self.backup.keep = True
+        # self.backup.keep = True
         self.doc.save(self.name)
