@@ -1,15 +1,9 @@
 
+# difflib.get_close_matches
 
 
-# We need to catch the window close event, so that we can clean up.  It's not automatic, sadly.
-def page_window(e):
-    global pdfFile
 
-    print(e.data)
-    if e.data == "close":
-        if pdfFile:
-            del pdfFile
-        e.page.window_destroy()
+
 
 
 
