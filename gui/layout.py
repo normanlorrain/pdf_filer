@@ -1,4 +1,5 @@
 import flet as ft
+import behaviour
 
 _page = None
 # References to the fields so we can update them
