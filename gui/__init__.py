@@ -1,6 +1,6 @@
 from layout import *
-from behaviour import *
+from gui.logic import *
+
 
 def start():
     ft.app(target=main)
-

@@ -1,5 +1,5 @@
 import flet as ft
-import behaviour
+import gui.logic as logic
 
 _page = None
 # References to the fields so we can update them
