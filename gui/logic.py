@@ -1,12 +1,6 @@
-import layout
+import refs
 
 # difflib.get_close_matches
-
-
-
-
-
-
 
 
 # def pick_files_result(e: ft.FilePickerResultEvent):
@@ -18,8 +12,9 @@ import layout
 #     print(f"User opens {fileDetails.name}")
 #     nextFile(fileDetails.path)
 
-def nextFile(e= None):
 
+def nextFile(e=None):
+    pass
     # try:
     #     path = next(src.fileIterator)
     # except StopIteration:
@@ -31,8 +26,6 @@ def nextFile(e= None):
     #     page.update()
     #     src.init()
     #     return
-
-
 
     # global pdfFile
     # pdfFile = pdf.pdf(path )
@@ -69,18 +62,17 @@ def nextFile(e= None):
 
     #     dstCol.current.controls.append(ft.Text(util.generateDstName(path)))
 
-
-
-
     # page.update()
     # pass
-    
+
 
 # def pageImage(pageNumber):
-def onPgUp(e):    
+def onPgDown(e):
     pass
 
+
 def onPgUp(e):
+    pass
     # global img
     # pageNumber = pdfFile.changePage(down)
     # page.controls.pop()
@@ -91,11 +83,11 @@ def onPgUp(e):
 
 
 def onMoveBtn(e):
-    print("Logic: Move file")
+    print(f"Logic: Move file: {refs.txtSrcFileName.current.value}")
     # pdfFile.save()
     # btnMove.disabled = True
     # page.update()
 
 
-
 if __name__ == "__main__":
+    pass

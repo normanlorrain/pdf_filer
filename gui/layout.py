@@ -1,15 +1,8 @@
 import flet as ft
-import gui.logic as logic
+import refs
+import logic
 
 _page = None
-# References to the fields so we can update them
-imgPDF = ft.Ref[ft.Image]()
-colDestination = ft.Ref[ft.Column]()  # The right-hand column, containing these:
-txtNameDetected = ft.Ref[ft.Text]()  #     - The
-rgNameMatches = ft.Ref[ft.RadioGroup]()
-rgFileType = ft.Ref[ft.RadioGroup]()
-tfFileTypeOther = ft.Ref[ft.TextField]()
-txtDstFileName = ft.Ref[ft.Text]()
 
 
 # We need to catch the window close event, so that we can clean up.  It's not automatic, sadly.
@@ -22,7 +15,7 @@ def windowEvent(e):
 
 
 def mainWindow(
-    page: ft.Page, onNextBtn=None, onPgUp=None, onPgDown=None, onMoveBtn=None
+    page: ft.Page, onNextBtn=None, onPgUp=None, onPgDown=None, onMoveBtn=logic.onMoveBtn
 ):
     global _page
     _page = page
@@ -55,15 +48,16 @@ def mainWindow(
 
     contentRow = ft.Row(
         controls=[
-            ft.Image(ref=imgPDF),
+            ft.Image(ref=refs.imgPDF),
             ft.Column(
-                ref=colDestination,
+                ref=refs.colDestination,
                 controls=[
-                    ft.Text(ref=txtNameDetected, value="Name detected here"),
-                    ft.RadioGroup(ref=rgNameMatches),
-                    ft.RadioGroup(ref=rgFileType),
-                    ft.TextField(ref=tfFileTypeOther),
-                    ft.Text(ref=txtDstFileName, value="Final filename here"),
+                    ft.Text(ref=refs.txtSrcFileName, value="src filename"),
+                    ft.Text(ref=refs.txtNameDetected, value="Name detected here"),
+                    ft.RadioGroup(ref=refs.rgNameMatches),
+                    ft.RadioGroup(ref=refs.rgFileType),
+                    ft.TextField(ref=refs.tfFileTypeOther),
+                    ft.Text(ref=refs.txtDstFileName, value="Final filename here"),
                     ft.ElevatedButton("Move File", on_click=onMoveBtn),
                 ],
                 alignment=ft.MainAxisAlignment.START,
@@ -76,22 +70,15 @@ def mainWindow(
 
     page.update()
 
-    def on_message(msg):
-        print(msg)
-        page.update()
+    # def on_message(msg):
+    #     print(msg)
+    #     page.update()
 
-    page.pubsub.subscribe(on_message)  # type: ignore
-    print("sending")
-    page.pubsub.send_all("Test Messsage")  # type: ignore
-    print("Sent")
+    # page.pubsub.subscribe(on_message)  # type: ignore
+    # print("sending")
+    # page.pubsub.send_all("Test Messsage")  # type: ignore
+    # print("Sent")
 
 
 if __name__ == "__main__":
-    import threading
-
     ft.app(target=mainWindow)
-    # thread = threading.Thread(target=ft.app, kwargs={"target": mainWindow})
-    # thread.start()
-    # print("thread started")
-    # _page.pubsub.send_all("Sending from outside thread")
-    # thread.join()
