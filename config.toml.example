@@ -1,0 +1,8 @@
+[INPUT]
+SOURCE = "C:\\pdf_filer\\test\\input"
+
+[LeonardMcCoy]
+dst = "C:\\pdf_filer\\test\\output\\l.mccoy\\AA-patients"
+
+[DoogieHowser]
+dst = "C:\\pdf_filer\\test\\output\\d.howser\\A-Patient Files"
