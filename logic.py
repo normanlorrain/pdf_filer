@@ -8,6 +8,7 @@ def nextFile(e=None):
     pass
     try:
         path = next(src.fileIterator)
+        nameTuple = src.filename_nameTuple_dict[path]
     except StopIteration:
         dlg = ft.AlertDialog(
             title=ft.Text("Last file"), on_dismiss=lambda e: print("Dialog dismissed!")
@@ -19,11 +20,21 @@ def nextFile(e=None):
         return
     refs.txtSrcFileName.current.value = path
     pdfFile = pdf.pdf(path)
-    pageNumber = 0
-    refs.imgPDF.current.src_base64 = pdfFile.get_page(pageNumber)
-    refs.txtNameDetected.current.value = src.filename_nameTuple_dict[path]
+    refs.imgPDF.current.src_base64 = pdfFile.get_page(0)
+    refs.txtNameDetected.current.value = nameTuple
+    refs.rgNameMatches.current.content = createMatches(nameTuple)
     if e:
         e.page.update()
+
+
+def createMatches(nameTuple):
+    return ft.Column(
+        [
+            ft.Radio(value="red", label=f"Red{nameTuple}"),
+            ft.Radio(value="green", label=f"Green{nameTuple}"),
+            ft.Radio(value="blue", label=f"Blue{nameTuple}"),
+        ]
+    )
 
 
 # def pageImage(pageNumber):
@@ -43,7 +54,9 @@ def onPgUp(e):
 
 
 def onMoveBtn(e):
-    print(f"Logic: Move file: {refs.txtSrcFileName.current.value}")
+    print(
+        f"Logic: Move file: {refs.txtSrcFileName.current.value} , {refs.rgNameMatches.current.value}"
+    )
     # pdfFile.save()
     # btnMove.disabled = True
     # page.update()

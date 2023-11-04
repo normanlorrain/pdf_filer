@@ -1,3 +1,4 @@
+import datetime
 import glob
 import util
 import os
@@ -27,6 +28,16 @@ def getName(last: str, first: str):
         return patientFolders[f"{last}::{first}"]
     else:
         return None
+
+
+def generateDstName(path, description):
+    format = "%Y%m%d"
+    date = datetime.datetime.strptime(path[0:8], format).date()
+    return f'{description} {date.strftime("%b %d %Y")}'
+
+
+if __name__ == "__main__":
+    print(generateDstName("20231014083105-2052_05.pdf", "Rx sent"))
 
 
 if __name__ == "__main__":

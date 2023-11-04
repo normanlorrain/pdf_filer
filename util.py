@@ -4,24 +4,22 @@ import re
 def splitName(fullName):
     names = re.findall(r"[\w']+", fullName)
 
-    last=''
-    first=''
+    last = ""
+    first = ""
 
-    if ',' in fullName:
-        last,first = fullName.split(',', 1)
+    if "," in fullName:
+        last, first = fullName.split(",", 1)
         # first = ' '.join(names)
     elif any(map(str.isupper, names)):
         for name in names:
             if name.isupper():
                 last = name
             else:
-                first+=name
-                first += ' '
+                first += name
+                first += " "
     else:
         last = names[-1]
-        first = ' '.join(names[:-1])
-
-
+        first = " ".join(names[:-1])
 
     # last = ''
     # first = ''
@@ -32,15 +30,3 @@ def splitName(fullName):
     last = last.upper().strip()
     first = first.strip()
     return (last, first)
-
-
-import datetime
-
-def generateDstName(path, description):
-    format='%Y%m%d'
-    date = datetime.datetime.strptime(path[0:8], format).date()
-    return f'{description} {date.strftime("%b %d %Y")}'
-
-
-if __name__ == '__main__':
-    print(generateDstName('20231014083105-2052_05.pdf', 'Rx sent'))
