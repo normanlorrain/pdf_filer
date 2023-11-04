@@ -1,0 +1,7 @@
+from difflib import get_close_matches
+
+
+get_close_matches("appel", ["ape", "apple", "peach", "puppy"])
+
+get_close_matches("appel::pie", ["ape::pie", "apple::pie", "peach::pie", "puppy::pie"])
+pass
