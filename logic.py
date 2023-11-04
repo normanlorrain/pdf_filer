@@ -4,16 +4,6 @@ import src
 import pdf
 
 
-# def pick_files_result(e: ft.FilePickerResultEvent):
-#     if not e.files:
-#         print("Cancelled!")
-#         return
-#     fileDetails = e.files[0]
-
-#     print(f"User opens {fileDetails.name}")
-#     nextFile(fileDetails.path)
-
-
 def nextFile(e=None):
     pass
     try:
@@ -31,6 +21,7 @@ def nextFile(e=None):
     pdfFile = pdf.pdf(path)
     pageNumber = 0
     refs.imgPDF.current.src_base64 = pdfFile.get_page(pageNumber)
+    refs.txtNameDetected.current.value = src.filename_nameTuple_dict[path]
     if e:
         e.page.update()
 
