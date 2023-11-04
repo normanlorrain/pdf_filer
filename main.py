@@ -1,7 +1,7 @@
 import src
 import dst
-import gui
+import layout
 
 
-src.scanFiles()
-gui.start()
+src.init()
+layout.start()

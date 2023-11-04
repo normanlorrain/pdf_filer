@@ -11,7 +11,6 @@ width, height = fitz.paper_size("letter")
 
 class pdf:
     def __init__(self, fname):
-
         self.name = fname
         inputFile = open(fname, "rb")
         bytes = inputFile.read()
@@ -31,8 +30,8 @@ class pdf:
     def get_page(self, pno):
         global width, height
         zoom = 2
-        pixmap = self.doc.get_page_pixmap( # type: ignore
-            pno,matrix=fitz.Matrix(zoom, zoom)
+        pixmap = self.doc.get_page_pixmap(  # type: ignore
+            pno, matrix=fitz.Matrix(zoom, zoom)
         )  # *, matrix: matrix_like = Identity, dpi=None, colorspace: Colorspace = csRGB, clip: rect_like = None, alpha: bool = False, annots: bool = True)
         width = pixmap.width
         height = pixmap.height

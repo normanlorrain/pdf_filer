@@ -80,5 +80,9 @@ def mainWindow(
     # print("Sent")
 
 
-if __name__ == "__main__":
+def start():
     ft.app(target=mainWindow)
+
+
+if __name__ == "__main__":
+    start()
