@@ -1,4 +1,7 @@
+import flet as ft
 import refs
+import src
+import pdf
 
 # difflib.get_close_matches
 
@@ -15,25 +18,20 @@ import refs
 
 def nextFile(e=None):
     pass
-    # try:
-    #     path = next(src.fileIterator)
-    # except StopIteration:
-    #     dlg = ft.AlertDialog(
-    #     title=ft.Text("Last file"), on_dismiss=lambda e: print("Dialog dismissed!")
-    #     )
-    #     page.dialog = dlg
-    #     dlg.open = True
-    #     page.update()
-    #     src.init()
-    #     return
-
-    # global pdfFile
-    # pdfFile = pdf.pdf(path )
-    # btnMove.disabled = True
-    # bntDn.disabled = False
-    # bntUp.disabled = False
-    # # btn180.disabled = False
-    # pageNumber = 0
+    try:
+        path = next(src.fileIterator)
+    except StopIteration:
+        dlg = ft.AlertDialog(
+            title=ft.Text("Last file"), on_dismiss=lambda e: print("Dialog dismissed!")
+        )
+        page.dialog = dlg
+        dlg.open = True
+        page.update()
+        src.init()
+        return
+    refs.txtSrcFileName.current.value = path
+    pdfFile = pdf.pdf(path)
+    pageNumber = 0
     # img = ft.Image(
     #     src_base64=pdfFile.get_page(pageNumber),
     #     # width=pdf.width,
@@ -41,6 +39,13 @@ def nextFile(e=None):
     #     fit=ft.ImageFit.FIT_HEIGHT,
     #     expand=True,
     # )
+    refs.imgPDF.current.src_base64 = pdfFile.get_page(pageNumber)
+
+    # global pdfFile
+    # btnMove.disabled = True
+    # bntDn.disabled = False
+    # bntUp.disabled = False
+    # # btn180.disabled = False
 
     # contentRow.controls.pop(0)
     # contentRow.controls.insert(0,img)

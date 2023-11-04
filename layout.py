@@ -69,6 +69,8 @@ def mainWindow(
     page.add(contentRow)
 
     page.update()
+    logic.nextFile()
+    page.update()
 
     # def on_message(msg):
     #     print(msg)
