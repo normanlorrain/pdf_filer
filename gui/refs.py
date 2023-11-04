@@ -1,7 +1,7 @@
 import flet as ft
 
 
-# References to the fields so we can update them
+# References to the fields so we can access & update them
 imgPDF = ft.Ref[ft.Image]()
 colDestination = ft.Ref[ft.Column]()  # The right-hand column, containing these:
 txtSrcFileName = ft.Ref[ft.Text]()  #      - The name of the original file
