@@ -15,7 +15,11 @@ def windowEvent(e):
 
 
 def mainWindow(
-    page: ft.Page, onNextBtn=None, onPgUp=None, onPgDown=None, onMoveBtn=logic.onMoveBtn
+    page: ft.Page,
+    onNextBtn=logic.nextFile,
+    onPgUp=None,
+    onPgDown=None,
+    onMoveBtn=logic.onMoveBtn,
 ):
     global _page
     _page = page
@@ -54,7 +58,9 @@ def mainWindow(
                 controls=[
                     ft.Text(ref=refs.txtSrcFileName, value="src filename"),
                     ft.Text(ref=refs.txtNameDetected, value="Name detected here"),
+                    ft.Text(value="Candidate matches:"),
                     ft.RadioGroup(ref=refs.rgNameMatches),
+                    ft.Text(value="Type of file:"),
                     ft.RadioGroup(ref=refs.rgFileType),
                     ft.TextField(ref=refs.tfFileTypeOther),
                     ft.Text(ref=refs.txtDstFileName, value="Final filename here"),

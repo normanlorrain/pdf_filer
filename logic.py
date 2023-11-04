@@ -3,8 +3,6 @@ import refs
 import src
 import pdf
 
-# difflib.get_close_matches
-
 
 # def pick_files_result(e: ft.FilePickerResultEvent):
 #     if not e.files:
@@ -24,51 +22,17 @@ def nextFile(e=None):
         dlg = ft.AlertDialog(
             title=ft.Text("Last file"), on_dismiss=lambda e: print("Dialog dismissed!")
         )
-        page.dialog = dlg
+        e.page.dialog = dlg
         dlg.open = True
-        page.update()
+        e.page.update()
         src.init()
         return
     refs.txtSrcFileName.current.value = path
     pdfFile = pdf.pdf(path)
     pageNumber = 0
-    # img = ft.Image(
-    #     src_base64=pdfFile.get_page(pageNumber),
-    #     # width=pdf.width,
-    #     # height=pdf.height,
-    #     fit=ft.ImageFit.FIT_HEIGHT,
-    #     expand=True,
-    # )
     refs.imgPDF.current.src_base64 = pdfFile.get_page(pageNumber)
-
-    # global pdfFile
-    # btnMove.disabled = True
-    # bntDn.disabled = False
-    # bntUp.disabled = False
-    # # btn180.disabled = False
-
-    # contentRow.controls.pop(0)
-    # contentRow.controls.insert(0,img)
-    # page.update()
-
-    # name = src.getNameTuple(path)
-    # if name:
-    #     (last,first) = name
-    #     dstCol.current.controls.clear()
-    #     dstCol.current.controls.append(ft.Text(f"Name detected: {last}, {first}"))
-    #     destination = dst.getName(last,first)
-    #     if destination:
-    #         dstCol.current.controls.append(ft.Text(f"destination: {destination}", width=300))
-
-    #     dstCol.current.controls.append(ft.Radio(value="letter", label="Letter"))
-    #     dstCol.current.controls.append(ft.Radio(value="rx", label="Rx"))
-    #     dstCol.current.controls.append(ft.Radio(value="other", label="Other"))
-    #     dstCol.current.controls.append(ft.TextField(label="Other"))
-
-    #     dstCol.current.controls.append(ft.Text(util.generateDstName(path)))
-
-    # page.update()
-    # pass
+    if e:
+        e.page.update()
 
 
 # def pageImage(pageNumber):
