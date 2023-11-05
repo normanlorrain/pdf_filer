@@ -1,3 +1,4 @@
+from pathlib import Path
 import datetime
 import glob
 import util
@@ -32,15 +33,16 @@ def getCloseNames(last: str, first: str):
     return list(map(lambda name: (name, patientFolders[name]), closeNames))
 
 
-def generateDstName(path, description):
+def generateDstDate(unknownPath):
+    path = Path(unknownPath).name
     format = "%Y%m%d"
     date = datetime.datetime.strptime(path[0:8], format).date()
-    return f'{description} {date.strftime("%b %d %Y")}'
+    return date.strftime("%b %d %Y")
 
 
 if __name__ == "__main__":
-    print(generateDstName("20231014083105-2052_05.pdf", "Rx sent"))
-
+    print(generateDstDate("20231014083105-2052_05.pdf"))
+    print(generateDstDate("C:\\TEMP\\20241014083105-2052_05.pdf"))
 
 if __name__ == "__main__":
     init()

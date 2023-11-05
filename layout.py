@@ -1,6 +1,7 @@
 import flet as ft
 import refs
 import logic
+import config
 
 _page = None
 
@@ -62,9 +63,16 @@ def mainWindow(
                     ft.RadioGroup(
                         ref=refs.rgNameMatches,
                         content=ft.Column(ref=refs.rgcNameMatches),
+                        on_change=logic.onMatchSelection,
                     ),
                     ft.Text(value="Type of file:"),
-                    ft.RadioGroup(ref=refs.rgFileType),
+                    ft.RadioGroup(
+                        ref=refs.rgFileType,
+                        content=ft.Column(
+                            ref=refs.rgcFileType, controls=radioButtonFileTypes()
+                        ),
+                        on_change=logic.onTypeSelection,
+                    ),
                     ft.TextField(ref=refs.tfFileTypeOther),
                     ft.Text(ref=refs.txtDstFileName, value="Final filename here"),
                     ft.ElevatedButton("Move File", on_click=onMoveBtn),
@@ -89,6 +97,15 @@ def mainWindow(
     # print("sending")
     # page.pubsub.send_all("Test Messsage")  # type: ignore
     # print("Sent")
+
+
+def radioButtonFileTypes() -> list:
+    return list(
+        map(
+            lambda item: ft.Radio(value=item[1], label=item[0]),
+            config.config["TYPES"].items(),
+        )
+    )
 
 
 def start():

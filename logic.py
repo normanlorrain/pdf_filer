@@ -1,3 +1,4 @@
+from pathlib import Path
 import flet as ft
 from flet_core.control_event import ControlEvent
 import refs
@@ -63,6 +64,51 @@ def onMoveBtn(e):
     # pdfFile.save()
     # btnMove.disabled = True
     # page.update()
+
+
+def onMatchSelection(e):
+    print(f"Match selected: {refs.rgNameMatches.current.value}")
+    updateFinal(e)
+    e.page.update()
+    pass
+
+
+def onTypeSelection(e):
+    print(f"Type selected: {refs.rgFileType.current.value}")
+    updateFinal(e)
+    e.page.update()
+    pass
+
+
+def updateFinal(e):
+    # The Radio Gruop value for mached name has the destination folder
+    dstFolder = refs.rgNameMatches.current.value
+
+    # The Radio Gruop value selected type contains the format string
+    nameFormat = refs.rgFileType.current.value
+
+    if dstFolder == None or nameFormat == None:
+        refs.txtDstFileName.current.value = (
+            "Complete the match / type selection first!!!"
+        )
+        return
+    other = refs.tfFileTypeOther.current.value
+
+    if refs.txtSrcFileName.current.value == None:
+        refs.txtDstFileName.current.value = "NO SOURCE FILE SELECTED"
+        return
+    srcName = Path(refs.txtSrcFileName.current.value)
+    srcDate = dst.generateDstDate(srcName.name)
+
+    dstName = Path(
+        nameFormat.format(date=srcDate, other=refs.tfFileTypeOther.current.value)
+    )
+
+    dstPath = Path(dstFolder).joinpath(dstName.with_suffix(srcName.suffix))
+
+    refs.txtDstFileName.current.value = str(dstPath)
+
+    pass
 
 
 if __name__ == "__main__":
