@@ -59,7 +59,10 @@ def mainWindow(
                     ft.Text(ref=refs.txtSrcFileName, value="src filename"),
                     ft.Text(ref=refs.txtNameDetected, value="Name detected here"),
                     ft.Text(value="Candidate matches:"),
-                    ft.RadioGroup(ref=refs.rgNameMatches),
+                    ft.RadioGroup(
+                        ref=refs.rgNameMatches,
+                        content=ft.Column(ref=refs.rgcNameMatches),
+                    ),
                     ft.Text(value="Type of file:"),
                     ft.RadioGroup(ref=refs.rgFileType),
                     ft.TextField(ref=refs.tfFileTypeOther),
@@ -75,7 +78,7 @@ def mainWindow(
     page.add(contentRow)
 
     page.update()
-    logic.nextFile()
+    logic.nextFile(None)
     page.update()
 
     # def on_message(msg):

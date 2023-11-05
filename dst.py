@@ -30,6 +30,11 @@ def getName(last: str, first: str):
         return None
 
 
+def getCloseNames(last: str, first: str):
+    closeNames = difflib.get_close_matches(f"{last}::{first}", patientFolders)
+    return list(map(lambda name: (name, patientFolders[name]), closeNames))
+
+
 def generateDstName(path, description):
     format = "%Y%m%d"
     date = datetime.datetime.strptime(path[0:8], format).date()
@@ -41,4 +46,6 @@ if __name__ == "__main__":
 
 
 if __name__ == "__main__":
+    init()
+
     pass

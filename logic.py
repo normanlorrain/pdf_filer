@@ -1,10 +1,18 @@
 import flet as ft
+from flet_core.control_event import ControlEvent
 import refs
 import src
+import dst
 import pdf
 
 
-def nextFile(e=None):
+def createMatches(nameTuple) -> list:
+    last, first = nameTuple
+    matches = dst.getCloseNames(last, first)
+    return list(map(lambda match: ft.Radio(value=match[1], label=match[0]), matches))
+
+
+def nextFile(e: ControlEvent | None):
     pass
     try:
         path = next(src.fileIterator)
@@ -13,28 +21,23 @@ def nextFile(e=None):
         dlg = ft.AlertDialog(
             title=ft.Text("Last file"), on_dismiss=lambda e: print("Dialog dismissed!")
         )
-        e.page.dialog = dlg
-        dlg.open = True
-        e.page.update()
+        if e:
+            e.page.dialog = dlg
+            dlg.open = True
+            e.page.update()
         src.init()
         return
     refs.txtSrcFileName.current.value = path
     pdfFile = pdf.pdf(path)
     refs.imgPDF.current.src_base64 = pdfFile.get_page(0)
     refs.txtNameDetected.current.value = nameTuple
-    refs.rgNameMatches.current.content = createMatches(nameTuple)
+    # refs.rgNameMatches.current.content.controls = createMatches(nameTuple)
+    radiobuttons = createMatches(nameTuple)
+
+    # refs.rgcNameMatches.current.controls.clear()
+    refs.rgcNameMatches.current.controls = radiobuttons
     if e:
         e.page.update()
-
-
-def createMatches(nameTuple):
-    return ft.Column(
-        [
-            ft.Radio(value="red", label=f"Red{nameTuple}"),
-            ft.Radio(value="green", label=f"Green{nameTuple}"),
-            ft.Radio(value="blue", label=f"Blue{nameTuple}"),
-        ]
-    )
 
 
 # def pageImage(pageNumber):

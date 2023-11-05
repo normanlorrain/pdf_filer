@@ -4,4 +4,12 @@ from difflib import get_close_matches
 get_close_matches("appel", ["ape", "apple", "peach", "puppy"])
 
 get_close_matches("appel::pie", ["ape::pie", "apple::pie", "peach::pie", "puppy::pie"])
+
+testDict = {
+    "Duck::Daffy": "DUCK, Dafy",
+    "Bunny::Bugs": "BUNNY, Bugs",
+    "Duck::Dafy": "DUCK, Daffy",
+}
+get_close_matches("Duck::Daffy", testDict)
+
 pass
