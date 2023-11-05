@@ -1,8 +1,11 @@
-[INPUT]
-SOURCE = "C:\\pdf_filer\\test\\input"
+[SRC]
+DIR = "D:\\github\\pdf_filer\\test\\input"
 
-[LeonardMcCoy]
-dst = "C:\\pdf_filer\\test\\output\\l.mccoy\\AA-patients"
+[DST]
+LeonardMcCoy = "D:\\github\\pdf_filer\\test\\output\\l.mccoy\\AA-patients"
+DoogieHowser = "D:\\github\\pdf_filer\\test\\output\\d.howser\\A-Patient Files"
 
-[DoogieHowser]
-dst = "C:\\pdf_filer\\test\\output\\d.howser\\A-Patient Files"
+[TYPES]
+fax = "Fax sent {date}"
+letter = "letter sent {date}"
+other = "{other} sent {date}"

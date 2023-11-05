@@ -8,16 +8,13 @@ import difflib
 # difflib.get_close_matches
 
 
-config = cfg.config
+dstUsers = cfg.config["DST"]
 
 patientFolders = {}
 
 
 def init():
-    for user in config:
-        if user == "INPUT":
-            continue
-        root = config[user]["dst"]
+    for root in dstUsers.values():
         for folder in glob.glob("*", root_dir=root):
             (last, first) = util.splitName(folder)
             patientFolders[f"{last}::{first}"] = os.path.join(root, folder)
