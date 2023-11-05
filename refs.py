@@ -12,3 +12,4 @@ rgFileType = ft.Ref[ft.RadioGroup]()  #     - Selectable type for this file
 rgcFileType = ft.Ref[ft.Column]()  #         + A column of radio buttons for the type
 tfFileTypeOther = ft.Ref[ft.TextField]()  # - Other type of file
 txtDstFileName = ft.Ref[ft.Text]()  #       - The destination file name
+btnMoveFile = ft.Ref[ft.ElevatedButton]()

@@ -32,12 +32,10 @@ def nextFile(e: ControlEvent | None):
     pdfFile = pdf.pdf(path)
     refs.imgPDF.current.src_base64 = pdfFile.get_page(0)
     refs.txtNameDetected.current.value = nameTuple
-    # refs.rgNameMatches.current.content.controls = createMatches(nameTuple)
     radiobuttons = createMatches(nameTuple)
-
-    # refs.rgcNameMatches.current.controls.clear()
     refs.rgcNameMatches.current.controls = radiobuttons
     if e:
+        updateFinal(e)
         e.page.update()
 
 
@@ -107,8 +105,8 @@ def updateFinal(e):
     dstPath = Path(dstFolder).joinpath(dstName.with_suffix(srcName.suffix))
 
     refs.txtDstFileName.current.value = str(dstPath)
-
-    pass
+    refs.btnMoveFile.current.disabled = False
+    e.page.update()
 
 
 if __name__ == "__main__":
