@@ -68,7 +68,7 @@ def onPgUp(e):
 
 def onMoveBtn(e):
     print(
-        f"Logic: Move file: {refs.txtSrcFileName.current.value} , {refs.rgNameMatches.current.value}"
+        f"Logic: Move file: {refs.txtSrcFileName.current.value} , {refs.txtDstFileName.current.value}"
     )
 
     # pdfFile.save()
@@ -100,29 +100,30 @@ def updateDestination(e):
     # The Radio Gruop value selected type contains the format string
     nameFormat = refs.rgFileType.current.value
 
+    # validate the destination Radio Button Group has a selection
     if dstFolder == "" or nameFormat == None:
         refs.txtDstFileName.current.value = (
             "Complete the match / type selection first!!!"
         )
         refs.btnMoveFile.current.disabled = True
-
         return
-    other = refs.tfFileTypeOther.current.value
 
+    # validate the File Type Radio Button Group has a selection
     if refs.txtSrcFileName.current.value == None:
         refs.txtDstFileName.current.value = "NO SOURCE FILE SELECTED"
         refs.btnMoveFile.current.disabled = True
         return
+
+    # Generate the filename.  We need to convert date prefix of the filename
     srcName = Path(refs.txtSrcFileName.current.value)
     srcDate = dst.generateDstDate(srcName.name)
 
-    dstName = Path(
-        nameFormat.format(date=srcDate, other=refs.tfFileTypeOther.current.value)
-    )
+    other = refs.tfFileTypeOther.current.value  # Ignored if not selected.
+    dstName = Path(nameFormat.format(date=srcDate, other=other))  # Create name
+    dstName = dstName.with_suffix(srcName.suffix)  # Add ".pdf"
+    dstFilePath = Path(dstFolder).joinpath(dstName)
 
-    dstPath = Path(dstFolder).joinpath(dstName.with_suffix(srcName.suffix))
-
-    refs.txtDstFileName.current.value = str(dstPath)
+    refs.txtDstFileName.current.value = str(dstFilePath)
     refs.btnMoveFile.current.disabled = False
     e.page.update()
 
