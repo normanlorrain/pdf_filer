@@ -18,8 +18,8 @@ def windowEvent(e):
 def mainWindow(
     page: ft.Page,
     onNextBtn=logic.nextFile,
-    onPgUp=None,
-    onPgDown=None,
+    onPgUp=logic.onPgUp,
+    onPgDown=logic.onPgDown,
     onMoveBtn=logic.onMoveBtn,
 ):
     global _page
@@ -37,14 +37,18 @@ def mainWindow(
     # page.window_height = 110 * 5
     # page.window_resizable = False  # window is not resizable
 
-    btnNext = ft.TextButton(text="Next PDF", on_click=onNextBtn)
+    btnNext = ft.TextButton(
+        ref=refs.btnNext, text="Next PDF", on_click=onNextBtn, disabled=False
+    )
     bntUp = ft.TextButton(
-        "PgUp",
+        ref=refs.btnUp,
+        text="PgUp",
         on_click=onPgUp,
         disabled=True,
     )
     bntDn = ft.TextButton(
-        "PgDn",
+        ref=refs.btnDown,
+        text="PgDn",
         on_click=onPgDown,
         disabled=True,
     )
@@ -73,7 +77,9 @@ def mainWindow(
                         ),
                         on_change=logic.onTypeSelection,
                     ),
-                    ft.TextField(ref=refs.tfFileTypeOther, on_change=logic.updateFinal),
+                    ft.TextField(
+                        ref=refs.tfFileTypeOther, on_change=logic.updateDestination
+                    ),
                     ft.Text(ref=refs.txtDstFileName),
                     ft.ElevatedButton(
                         ref=refs.btnMoveFile,

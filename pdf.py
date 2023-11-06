@@ -4,6 +4,8 @@ import fitz
 import pathlib
 import os
 
+currentFile = None
+
 print(fitz.__doc__)
 
 width, height = fitz.paper_size("letter")
@@ -19,7 +21,7 @@ class pdf:
         self.doc = fitz.Document(stream=bytes)
 
         self.page_count = len(self.doc)
-        self.currentPage = 0
+        self.currentPage = 1
 
         title = "PyMuPDF display of '%s', pages: %i" % (fname, self.page_count)
 
@@ -27,31 +29,27 @@ class pdf:
         pass
 
     # read the page data
-    def get_page(self, pno):
+    def get_page(self):
         global width, height
         zoom = 2
         pixmap = self.doc.get_page_pixmap(  # type: ignore
-            pno, matrix=fitz.Matrix(zoom, zoom)
+            self.currentPage - 1, matrix=fitz.Matrix(zoom, zoom)
         )  # *, matrix: matrix_like = Identity, dpi=None, colorspace: Colorspace = csRGB, clip: rect_like = None, alpha: bool = False, annots: bool = True)
         width = pixmap.width
         height = pixmap.height
-        print(f"get page {pno}: {width} x {height}")
+        print(f"get page {self.currentPage}: {width} x {height}")
         bytes = pixmap.tobytes()
         enc = base64.b64encode(bytes)
         strEnc = enc.decode("ascii")
         return strEnc
 
-    def changePage(self, down=True):
-        if down:
+    def pageDn(self):
+        if self.currentPage < self.doc.page_count:
             self.currentPage += 1
-        else:
-            self.currentPage -= 1
-        if self.currentPage < 0:
-            self.currentPage = 0
-        if self.currentPage >= self.doc.page_count:
-            self.currentPage = self.doc.page_count - 1
 
-        return self.currentPage
+    def pageUp(self):
+        if self.currentPage > 1:
+            self.currentPage -= 1
 
     def rotate(self):
         current_rotation = self.doc[self.currentPage].rotation

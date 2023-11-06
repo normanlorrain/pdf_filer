@@ -7,7 +7,7 @@ import dst
 import pdf
 
 
-def createMatches(nameTuple) -> list:
+def createMatchRadioButtons(nameTuple) -> list:
     last, first = nameTuple
     matches = dst.getCloseNames(last, first)
     return list(map(lambda match: ft.Radio(value=match[1], label=match[0]), matches))
@@ -31,33 +31,40 @@ def nextFile(e: ControlEvent | None):
         src.init()
         return
     refs.txtSrcFileName.current.value = path
-    pdfFile = pdf.pdf(path)
-    refs.imgPDF.current.src_base64 = pdfFile.get_page(0)
+    global currentFile
+    pdf.currentFile = pdf.pdf(path)
+    refs.imgPDF.current.src_base64 = pdf.currentFile.get_page()
+
+    # Set toobar buttons
+    if pdf.currentFile.page_count > 1:
+        refs.btnDown.current.disabled = False
+        refs.btnUp.current.disabled = False
+    else:
+        refs.btnDown.current.disabled = True
+        refs.btnUp.current.disabled = True
+
+    # Set working fields
     refs.txtNameDetected.current.value = nameTuple
-    radiobuttons = createMatches(nameTuple)
-    refs.rgcNameMatches.current.controls = radiobuttons
-    refs.rgNameMatches.current.value = None
-    refs.txtDstFileName.current.value = "Final filename here"
+    # refs.rgNameMatches.current.value = None  # don't think we can set this.
+
+    refs.rgcNameMatches.current.controls = createMatchRadioButtons(nameTuple)
+    refs.txtDstFileName.current.value = "Destination filename here"
     refs.btnMoveFile.current.disabled = True
-    # updateFinal(e)
     if e:
         e.page.update()
 
 
 # def pageImage(pageNumber):
 def onPgDown(e):
-    pass
+    pdf.currentFile.pageDn()
+    refs.imgPDF.current.src_base64 = pdf.currentFile.get_page()
+    e.page.update()
 
 
 def onPgUp(e):
-    pass
-    # global img
-    # pageNumber = pdfFile.changePage(down)
-    # page.controls.pop()
-    # img = pageImage(pageNumber)
-    # page.add(img)
-
-    # page.update()
+    pdf.currentFile.pageUp()
+    refs.imgPDF.current.src_base64 = pdf.currentFile.get_page()
+    e.page.update()
 
 
 def onMoveBtn(e):
@@ -73,21 +80,19 @@ def onMoveBtn(e):
 
 def onMatchSelection(e):
     print(f"Match selected: {refs.rgNameMatches.current.value}")
-    updateFinal(e)
+    updateDestination(e)
     e.page.update()
     pass
 
 
 def onTypeSelection(e):
     print(f"Type selected: {refs.rgFileType.current.value}")
-    updateFinal(e)
+    updateDestination(e)
     e.page.update()
     pass
 
 
-def updateFinal(e):
-    if e:
-        e.page.update()
+def updateDestination(e):
     refs.btnMoveFile.current.disabled = True
 
     # The Radio Gruop value for mached name has the destination folder

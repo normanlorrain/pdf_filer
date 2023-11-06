@@ -2,6 +2,10 @@ import flet as ft
 
 
 # References to the fields so we can access & update them
+btnNext = ft.Ref[ft.TextButton]()
+btnUp = ft.Ref[ft.TextButton]()
+btnDown = ft.Ref[ft.TextButton]()
+
 imgPDF = ft.Ref[ft.Image]()
 colDestination = ft.Ref[ft.Column]()  # The right-hand column, containing these:
 txtSrcFileName = ft.Ref[ft.Text]()  #      - The name of the original file
