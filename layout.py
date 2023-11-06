@@ -74,7 +74,7 @@ def mainWindow(
                         on_change=logic.onTypeSelection,
                     ),
                     ft.TextField(ref=refs.tfFileTypeOther, on_change=logic.updateFinal),
-                    ft.Text(ref=refs.txtDstFileName, value="Final filename here"),
+                    ft.Text(ref=refs.txtDstFileName),
                     ft.ElevatedButton(
                         ref=refs.btnMoveFile,
                         text="Move File",

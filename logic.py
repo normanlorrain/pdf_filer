@@ -34,8 +34,11 @@ def nextFile(e: ControlEvent | None):
     refs.txtNameDetected.current.value = nameTuple
     radiobuttons = createMatches(nameTuple)
     refs.rgcNameMatches.current.controls = radiobuttons
+    refs.rgNameMatches.current.value = None
+    refs.txtDstFileName.current.value = "Final filename here"
+    refs.btnMoveFile.current.disabled = True
+    # updateFinal(e)
     if e:
-        updateFinal(e)
         e.page.update()
 
 
@@ -59,9 +62,11 @@ def onMoveBtn(e):
     print(
         f"Logic: Move file: {refs.txtSrcFileName.current.value} , {refs.rgNameMatches.current.value}"
     )
+
     # pdfFile.save()
-    # btnMove.disabled = True
-    # page.update()
+
+    refs.btnMoveFile.current.disabled = True
+    e.page.update()
 
 
 def onMatchSelection(e):
@@ -79,6 +84,10 @@ def onTypeSelection(e):
 
 
 def updateFinal(e):
+    if e:
+        e.page.update()
+    refs.btnMoveFile.current.disabled = True
+
     # The Radio Gruop value for mached name has the destination folder
     dstFolder = refs.rgNameMatches.current.value
 
@@ -89,11 +98,14 @@ def updateFinal(e):
         refs.txtDstFileName.current.value = (
             "Complete the match / type selection first!!!"
         )
+        refs.btnMoveFile.current.disabled = True
+
         return
     other = refs.tfFileTypeOther.current.value
 
     if refs.txtSrcFileName.current.value == None:
         refs.txtDstFileName.current.value = "NO SOURCE FILE SELECTED"
+        refs.btnMoveFile.current.disabled = True
         return
     srcName = Path(refs.txtSrcFileName.current.value)
     srcDate = dst.generateDstDate(srcName.name)
