@@ -1,10 +1,11 @@
 from pathlib import Path
+import difflib
 import datetime
 import glob
-import util
 import os
+
+import util
 import config as cfg
-import difflib
 
 dstUsers = cfg.config["DST"]
 
