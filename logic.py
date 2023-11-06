@@ -7,6 +7,16 @@ import dst
 import pdf
 
 
+def alert(e, text):
+    dlg = ft.AlertDialog(
+        title=ft.Text(text), on_dismiss=lambda e: print("Dialog dismissed!")
+    )
+    if e:
+        e.page.dialog = dlg
+        dlg.open = True
+        e.page.update()
+
+
 def createMatchRadioButtons(nameTuple) -> list:
     last, first = nameTuple
     matches = dst.getCloseNames(last, first)
@@ -21,13 +31,7 @@ def nextFile(e: ControlEvent | None):
             src.scanFile(path)
         nameTuple = src.filename_nameTuple_dict[path]
     except StopIteration:
-        dlg = ft.AlertDialog(
-            title=ft.Text("Last file"), on_dismiss=lambda e: print("Dialog dismissed!")
-        )
-        if e:
-            e.page.dialog = dlg
-            dlg.open = True
-            e.page.update()
+        alert(e, "Last file!")
         src.init()
         return
     refs.txtSrcFileName.current.value = path
@@ -71,7 +75,14 @@ def onMoveBtn(e):
         f"Logic: Move file: {refs.txtSrcFileName.current.value} , {refs.txtDstFileName.current.value}"
     )
 
-    # pdfFile.save()
+    srcFile = Path(refs.txtSrcFileName.current.value)
+    dstFile = Path(refs.txtDstFileName.current.value)
+
+    if dstFile.exists():
+        alert(e, "Destination exists")
+        return
+
+    srcFile.rename(dstFile)
 
     refs.btnMoveFile.current.disabled = True
     e.page.update()
