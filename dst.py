@@ -6,9 +6,6 @@ import os
 import config as cfg
 import difflib
 
-# difflib.get_close_matches
-
-
 dstUsers = cfg.config["DST"]
 
 patientFolders = {}
@@ -21,11 +18,11 @@ def init():
             patientFolders[f"{last}::{first}"] = os.path.join(root, folder)
 
 
-def getName(last: str, first: str):
-    if f"{last}::{first}" in patientFolders:
-        return patientFolders[f"{last}::{first}"]
-    else:
-        return None
+# def getName(last: str, first: str):
+#     if f"{last}::{first}" in patientFolders:
+#         return patientFolders[f"{last}::{first}"]
+#     else:
+#         return None
 
 
 def getCloseNames(last: str, first: str):
