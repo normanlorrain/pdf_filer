@@ -48,9 +48,14 @@ def nextFile(e: ControlEvent | None):
         refs.btnUp.current.disabled = True
 
     # Set working fields
-    refs.txtNameDetected.current.value = nameTuple
-    refs.rgNameMatches.current.value = ""  # IMPORTANT
-    refs.rgcNameMatches.current.controls = createMatchRadioButtons(nameTuple)
+    if nameTuple:
+        refs.txtNameDetected.current.value = nameTuple
+        refs.rgNameMatches.current.value = ""  # IMPORTANT
+        refs.rgcNameMatches.current.controls = createMatchRadioButtons(nameTuple)
+    else:
+        refs.txtNameDetected.current.value = "NO NAME FOUND"
+        refs.rgNameMatches.current.value = ""
+        refs.rgcNameMatches.current.controls = None
     refs.txtDstFileName.current.value = "Destination filename here"
     refs.btnMoveFile.current.disabled = True
     if e:
