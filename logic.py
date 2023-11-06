@@ -17,6 +17,8 @@ def nextFile(e: ControlEvent | None):
     pass
     try:
         path = next(src.fileIterator)
+        if not src.filename_nameTuple_dict[path]:
+            src.scanFile(path)
         nameTuple = src.filename_nameTuple_dict[path]
     except StopIteration:
         dlg = ft.AlertDialog(

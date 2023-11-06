@@ -28,7 +28,7 @@ filename_nameTuple_dict = {}
 def init():
     global fileIterator
     listFiles()
-    scanFiles()
+    # scanFiles()
     fileIterator = iter(filename_nameTuple_dict)
 
 
