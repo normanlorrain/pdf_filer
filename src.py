@@ -26,30 +26,34 @@ filename_nameTuple_dict = {}
 
 
 def init():
-    global fileIterator
     listFiles()
-    # scanFiles()
+    global fileIterator
     fileIterator = iter(filename_nameTuple_dict)
 
 
-# def getNextFile():
+def getNextFile():
+    return next(fileIterator)
+
+
 #     for item in  filename_nameTuple_dict.items():
 #         print(f"getNextFile: {item}")
 #         yield item
 
 
-def getNameTuple(path):
-    return filename_nameTuple_dict[path]
+# def getNameTuple(path):
+#     return filename_nameTuple_dict[path]
 
 
 def listFiles():
+    global filename_nameTuple_dict
+    filename_nameTuple_dict = {}
     for fname in glob.glob(f"{scrDir}\\*.pdf"):
         filename_nameTuple_dict[fname] = None
 
 
-def scanFiles():
-    for fname in filename_nameTuple_dict:
-        scanFile(fname)
+# def scanFiles():
+#     for fname in filename_nameTuple_dict:
+#         scanFile(fname)
 
 
 def scanFile(fname):

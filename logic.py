@@ -5,16 +5,16 @@ import refs
 import src
 import dst
 import pdf
+import layout
 
 
-def alert(e, text):
+def alert(text):
     dlg = ft.AlertDialog(
         title=ft.Text(text), on_dismiss=lambda e: print("Dialog dismissed!")
     )
-    if e:
-        e.page.dialog = dlg
-        dlg.open = True
-        e.page.update()
+    layout._page.dialog = dlg
+    dlg.open = True
+    layout._page.update()
 
 
 def createMatchRadioButtons(nameTuple) -> list:
@@ -26,12 +26,12 @@ def createMatchRadioButtons(nameTuple) -> list:
 def nextFile(e: ControlEvent | None):
     pass
     try:
-        path = next(src.fileIterator)
+        path = src.getNextFile()
         if not src.filename_nameTuple_dict[path]:
             src.scanFile(path)
         nameTuple = src.filename_nameTuple_dict[path]
     except StopIteration:
-        alert(e, "Last file!")
+        alert("Last file!")
         src.init()
         return
     refs.txtSrcFileName.current.value = path
@@ -85,6 +85,10 @@ def onMoveBtn(e):
     srcFile.rename(dstFile)
 
     refs.btnMoveFile.current.disabled = True
+
+    refs.txtSrcFileName.current.value = None
+    refs.imgPDF.current.src_base64 = None
+    nextFile(e)
     e.page.update()
 
 
