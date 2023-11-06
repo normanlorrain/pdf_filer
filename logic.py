@@ -79,7 +79,7 @@ def onMoveBtn(e):
     dstFile = Path(refs.txtDstFileName.current.value)
 
     if dstFile.exists():
-        alert(e, "Destination exists")
+        alert("Destination exists")
         return
 
     srcFile.rename(dstFile)
