@@ -45,8 +45,7 @@ def nextFile(e: ControlEvent | None):
 
     # Set working fields
     refs.txtNameDetected.current.value = nameTuple
-    # refs.rgNameMatches.current.value = None  # don't think we can set this.
-
+    refs.rgNameMatches.current.value = ""  # IMPORTANT
     refs.rgcNameMatches.current.controls = createMatchRadioButtons(nameTuple)
     refs.txtDstFileName.current.value = "Destination filename here"
     refs.btnMoveFile.current.disabled = True
@@ -101,7 +100,7 @@ def updateDestination(e):
     # The Radio Gruop value selected type contains the format string
     nameFormat = refs.rgFileType.current.value
 
-    if dstFolder == None or nameFormat == None:
+    if dstFolder == "" or nameFormat == None:
         refs.txtDstFileName.current.value = (
             "Complete the match / type selection first!!!"
         )
