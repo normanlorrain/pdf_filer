@@ -43,7 +43,10 @@ def scanPDFContents(bytes):
     for page in doc.pages():
         print(f" {page.number} ", end="")
         textpage = page.get_textpage_ocr(
-            tessdata="C:\\Program Files\\Tesseract-OCR\\tessdata"
+            tessdata="C:\\Program Files\\Tesseract-OCR\\tessdata",
+            full=True,
+            #dpi=72*2,
+            flags= fitz.TEXTFLAGS_TEXT
         )
         contents = textpage.extractText()
         match = re.search(
