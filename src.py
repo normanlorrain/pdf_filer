@@ -47,7 +47,7 @@ def scanPDFContents(bytes):
         )
         contents = textpage.extractText()
         match = re.search(
-            r".*\nRE:\s*(.*)\n.*", contents
+            r".*\nRE:\s*(.*)\n.*", contents, flags=re.IGNORECASE
         )  # r".*\nRE:\s*(\w+),?\s*(\w+).*"
         if match:
             break
