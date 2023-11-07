@@ -9,7 +9,10 @@ def splitName(fullName):
 
     if len(names) == 1:  # BugsBUNNY
         names = re.findall(r"([A-Z][^A-Z]+|[A-Z]+)", fullName)
-        return splitName(" ".join(names[1:] + names[0:1]))  # Now "BUNNY Bugs"
+        if len(names) == 1:
+            return (fullName, "")  # No split; single word name; give up!
+        else:
+            return splitName(" ".join(names[1:] + names[0:1]))  # Now "BUNNY Bugs"
 
     if "," in fullName:
         last, first = fullName.split(",", 1)
@@ -46,6 +49,7 @@ if __name__ == "__main__":
     print(incrementStem("foobar"))
     print(incrementStem("foobar(1)"))
 
+    print(splitName("BUNNY"))
     print(splitName("BugsBUNNY"))
     print(splitName("bunny, bugs"))
     print(splitName("Bunny,Bugs"))
