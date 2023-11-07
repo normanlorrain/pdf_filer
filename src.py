@@ -1,27 +1,12 @@
-# import flet as ft
-import fitz
-
-# from PIL import Image
-
-import pytesseract
-
-
-# import pdf
-
-import sys
 import re
 import glob
+
+import fitz
 
 import util
 import config
 
-
-pdfFile = None
-
-img = None
 scrDir = config.config["SRC"]["DIR"]
-
-
 filename_nameTuple_dict = {}
 
 
@@ -35,25 +20,11 @@ def getNextFile():
     return next(fileIterator)
 
 
-#     for item in  filename_nameTuple_dict.items():
-#         print(f"getNextFile: {item}")
-#         yield item
-
-
-# def getNameTuple(path):
-#     return filename_nameTuple_dict[path]
-
-
 def listFiles():
     global filename_nameTuple_dict
     filename_nameTuple_dict = {}
     for fname in glob.glob(f"{scrDir}\\*.pdf"):
         filename_nameTuple_dict[fname] = None
-
-
-# def scanFiles():
-#     for fname in filename_nameTuple_dict:
-#         scanFile(fname)
 
 
 def scanFile(fname):
