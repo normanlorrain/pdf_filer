@@ -62,7 +62,11 @@ def mainWindow(
                 ref=refs.colDestination,
                 controls=[
                     ft.Text(ref=refs.txtSrcFileName, value="src filename"),
-                    ft.Text(ref=refs.txtNameDetected, value="Name detected here"),
+                    ft.Text(
+                        ref=refs.txtNameDetected,
+                        value="Name detected here",
+                        weight=ft.FontWeight.BOLD,
+                    ),
                     ft.Text(value="Candidate matches:"),
                     ft.RadioGroup(
                         ref=refs.rgNameMatches,
