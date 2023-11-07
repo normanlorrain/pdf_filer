@@ -2,3 +2,7 @@ pymupdf
 pytesseract
 flet
 black
+
+# Also required: Tesseract.  This is the OCR engine, PyMuPDF will interface to it.
+# See
+#    https://github.com/UB-Mannheim/tesseract/wiki
