@@ -1,11 +1,13 @@
 from pathlib import Path
 import flet as ft
 from flet_core.control_event import ControlEvent
+
 import refs
 import src
 import dst
 import pdf
 import layout
+import util
 
 
 def alert(text):
@@ -83,9 +85,13 @@ def onMoveBtn(e):
     srcFile = Path(refs.txtSrcFileName.current.value)
     dstFile = Path(refs.txtDstFileName.current.value)
 
-    if dstFile.exists():
-        alert("Destination exists")
-        return
+    i = 1
+    while dstFile.exists():
+        suffix = dstFile.suffix
+        stem = dstFile.stem  # e.g. c:\folder\folder\{stem}.pdf
+        newstem = util.incrementStem(stem)
+        print(f"Destination file exists.  Trying new stem: {newstem}")
+        dstFile = dstFile.with_stem(newstem)
 
     srcFile.rename(dstFile)
 
