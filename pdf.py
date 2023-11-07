@@ -23,7 +23,7 @@ class pdf:
         self.page_count = len(self.doc)
         self.currentPage = 1
 
-        title = "PyMuPDF display of '%s', pages: %i" % (fname, self.page_count)
+        print(f"PDF init: {fname}, {self.page_count} pages" )     
 
     def __del__(self):
         pass
@@ -44,6 +44,8 @@ class pdf:
         return strEnc
 
     def pageDn(self):
+        print(f"PDF pageDn: {self.name}")
+
         if self.currentPage < self.doc.page_count:
             self.currentPage += 1
 
@@ -54,7 +56,7 @@ class pdf:
     def rotate(self):
         current_rotation = self.doc[self.currentPage].rotation
         new_rotation = (current_rotation + 180) % 360
-        self.doc[self.currentPage].set_rotation(new_rotation)
+        self.doc[self.currentPage].set_rotation(new_rotation)    
 
     def save(self):
         # self.backup.keep = True
