@@ -2,7 +2,10 @@ import src
 import dst
 import layout
 
-
-src.init()
-dst.init()
-layout.start()
+try:
+    src.init()
+    dst.init()
+    layout.start()
+except Exception as e:
+    print(e)
+    input("Press enter")
