@@ -1,7 +1,8 @@
 pymupdf
-pytesseract
+# pytesseract
 flet
-black
+
+# black  # instead Use https://marketplace.visualstudio.com/items?itemName=ms-python.black-formatter
 
 # Also required: Tesseract.  This is the OCR engine, PyMuPDF will interface to it.
 # See
