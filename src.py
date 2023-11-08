@@ -28,7 +28,7 @@ def listFiles():
 
 
 def scanFile(fname):
-    print(fname, end=" ")
+    print(f"Scanning file {fname}")
     inputFile = open(fname, "rb")
     bytes = inputFile.read()
     inputFile.close()
@@ -40,15 +40,17 @@ def scanPDFContents(bytes):
     doc = fitz.Document(stream=bytes)
     # page = doc.load_page(4)
     match = None
+    print(f"Scanning {doc.page_count} pages:", end="")
     for page in doc.pages():
-        print(f" {page.number} ", end="")
+        print(f" {page.number +1} ", end="")
         textpage = page.get_textpage_ocr(
             tessdata="C:\\Program Files\\Tesseract-OCR\\tessdata",
             full=True,
-            #dpi=72*2,
-            flags= fitz.TEXTFLAGS_TEXT
+            dpi=300,
+            # flags= 0
         )
         contents = textpage.extractText()
+        # contents=page.get_text(textpage=textpage)
         match = re.search(
             r".*\nRE:\s*(.*)\n.*", contents, flags=re.IGNORECASE
         )  # r".*\nRE:\s*(\w+),?\s*(\w+).*"
@@ -59,7 +61,7 @@ def scanPDFContents(bytes):
         )  # Patient[\W\s]*([\s\w']+),?\s*(\w+).
         if match:
             break
-        match = re.search(r".*\nTo the parents of:[\W\s]*(.*)\n.*", contents)
+        match = re.search(r".*\nTo the parents of:?[\W\s]*(.*)\n.*", contents)
         if match:
             break
 
