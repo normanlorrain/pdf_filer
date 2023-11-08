@@ -8,4 +8,6 @@ DoogieHowser = "D:\\github\\pdf_filer\\test\\output\\d.howser\\A-Patient Files"
 [TYPES]
 consult = "Consult faxed {date}"
 Rx = "Presc faxed {date}"
+Appointment = "Appointment Letter faxed {date}"
+letter = "Letter faxed {date}"
 decline = "Referral decline - faxed {date}"
