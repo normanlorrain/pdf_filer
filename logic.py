@@ -76,6 +76,9 @@ def onPgUp(e):
 
 
 def onMoveBtn(e):
+    refs.btnMoveFile.current.disabled = True
+    e.page.update()
+
     print(
         f"Logic: Move file: {refs.txtSrcFileName.current.value} , {refs.txtDstFileName.current.value}"
     )
@@ -92,8 +95,6 @@ def onMoveBtn(e):
         dstFile = dstFile.with_stem(newstem)
 
     srcFile.rename(dstFile)
-
-    refs.btnMoveFile.current.disabled = True
 
     refs.txtSrcFileName.current.value = None
     refs.imgPDF.current.src_base64 = None
