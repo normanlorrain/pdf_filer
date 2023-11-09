@@ -56,8 +56,12 @@ def mainWindow(
     page.add(buttonRow)
 
     contentRow = ft.Row(
+        scroll=ft.ScrollMode.ALWAYS,
         controls=[
-            ft.Image(ref=refs.imgPDF),
+            ft.Column(
+                controls=[ft.Image(ref=refs.imgPDF)],
+                scroll=ft.ScrollMode.ALWAYS,
+            ),
             ft.Column(
                 ref=refs.colDestination,
                 controls=[
@@ -96,9 +100,11 @@ def mainWindow(
             ),
         ],
         vertical_alignment=ft.CrossAxisAlignment.START,
+        # scroll=ft.ScrollMode.AUTO,
     )
-
+    page.scroll = ft.ScrollMode.AUTO
     page.add(contentRow)
+    page.views
 
     page.update()
     logic.nextFile(None)
