@@ -29,16 +29,14 @@ def nextFile(e: ControlEvent | None):
     pass
     try:
         path = src.getNextFile()
-        if not src.filename_nameTuple_dict[path]:
-            src.scanFile(path)
-        nameTuple = src.filename_nameTuple_dict[path]
+        pdf.currentFile = pdf.pdf(path)
+        nameTuple = pdf.currentFile.scanForName()
     except StopIteration:
         alert("Last file!")
         src.init()
         return
     refs.txtSrcFileName.current.value = path
     global currentFile
-    pdf.currentFile = pdf.pdf(path)
     refs.imgPDF.current.src_base64 = pdf.currentFile.get_page()
 
     # Set toobar buttons

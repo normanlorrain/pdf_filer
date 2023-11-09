@@ -1,8 +1,8 @@
-import sys
 import base64
 import fitz
-import pathlib
-import os
+import re
+
+import util
 
 currentFile = None
 
@@ -23,7 +23,7 @@ class pdf:
         self.page_count = len(self.doc)
         self.currentPage = 1
 
-        print(f"PDF init: {fname}, {self.page_count} pages" )     
+        print(f"PDF init: {fname}, {self.page_count} pages")
 
     def __del__(self):
         pass
@@ -56,8 +56,48 @@ class pdf:
     def rotate(self):
         current_rotation = self.doc[self.currentPage].rotation
         new_rotation = (current_rotation + 180) % 360
-        self.doc[self.currentPage].set_rotation(new_rotation)    
+        self.doc[self.currentPage].set_rotation(new_rotation)
 
     def save(self):
         # self.backup.keep = True
         self.doc.save(self.name)
+
+    def scanForName(self):
+        # doc = fitz.Document(stream=bytes)
+        # page = doc.load_page(4)
+        match = None
+        print(f"Scanning {self.doc.page_count} pages:", end="")
+        for page in self.doc.pages():
+            print(f" {page.number +1} ", end="")
+            textpage = page.get_textpage_ocr(
+                tessdata="C:\\Program Files\\Tesseract-OCR\\tessdata",
+                full=True,
+                dpi=300,
+                # flags= 0
+            )
+            contents = textpage.extractText()
+            # contents=page.get_text(textpage=textpage)
+            match = re.search(
+                r".*\nRE:\s*(.*)\n.*", contents, flags=re.IGNORECASE
+            )  # r".*\nRE:\s*(\w+),?\s*(\w+).*"
+            if match:
+                break
+            match = re.search(
+                r".*\nPatient[\W\s]+(.*)\n.*", contents, flags=re.IGNORECASE
+            )  # Patient[\W\s]*([\s\w']+),?\s*(\w+).
+            if match:
+                break
+            match = re.search(r".*\nTo the parents of:?[\W\s]*(.*)\n.*", contents)
+            if match:
+                break
+
+        if match:
+            # (last, first)
+            fullName = match.group(1)
+            (last, first) = util.splitName(fullName)
+
+            print(f"   NAME:  {last}, {first}")
+            return (last, first)
+        else:
+            print(f"no name found.")
+            return None
