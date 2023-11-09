@@ -39,7 +39,7 @@ def nextFile(e: ControlEvent | None):
     global currentFile
     refs.imgPDF.current.src_base64 = pdf.currentFile.get_page()
 
-    # Set toobar buttons
+    # Set toolbar buttons
     if pdf.currentFile.page_count > 1:
         refs.btnDown.current.disabled = False
         refs.btnUp.current.disabled = False
@@ -90,9 +90,9 @@ def onMoveBtn(e):
     while dstFile.exists():
         suffix = dstFile.suffix
         stem = dstFile.stem  # e.g. c:\folder\folder\{stem}.pdf
-        newstem = util.incrementStem(stem)
-        print(f"Destination file exists.  Trying new stem: {newstem}")
-        dstFile = dstFile.with_stem(newstem)
+        newStem = util.incrementStem(stem)
+        print(f"Destination file exists.  Trying new stem: {newStem}")
+        dstFile = dstFile.with_stem(newStem)
 
     srcFile.rename(dstFile)
 
@@ -119,10 +119,10 @@ def onTypeSelection(e):
 def updateDestination(e):
     refs.btnMoveFile.current.disabled = True
 
-    # The Radio Gruop value for mached name has the destination folder
+    # The Radio Group value for matched name has the destination folder
     dstFolder = refs.rgNameMatches.current.value
 
-    # The Radio Gruop value selected type contains the format string
+    # The Radio Group value selected type contains the format string
     nameFormat = refs.rgFileType.current.value
 
     # validate the destination Radio Button Group has a selection
