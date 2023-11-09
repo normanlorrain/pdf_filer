@@ -8,8 +8,6 @@ currentFile = None
 
 print(fitz.__doc__)
 
-width, height = fitz.paper_size("letter")
-
 
 class pdf:
     def __init__(self, fname):
