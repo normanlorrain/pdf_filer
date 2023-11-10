@@ -6,3 +6,7 @@ Configuration file defines the directories containing the sent faxes (SRC files)
 
 Configuration file also defines the types of file, to determine the final naming.
 
+
+
+# splash image terms of use 
+https://www.bing.com/new/termsofuse?FORM=GENTOS

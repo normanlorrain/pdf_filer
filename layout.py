@@ -51,10 +51,13 @@ def mainWindow(page: ft.Page):
     page.add(buttonRow)
 
     contentRow = ft.Row(
+        width=2000,
         scroll=ft.ScrollMode.ALWAYS,
         controls=[
             ft.Column(
-                controls=[ft.Image(ref=refs.imgPDF, fit=ft.ImageFit.FIT_WIDTH)],
+                controls=[
+                    ft.Image(ref=refs.imgPDF, src="OIG.jpg", fit=ft.ImageFit.FIT_WIDTH)
+                ],
                 scroll=ft.ScrollMode.ALWAYS,
                 width=1000,
             ),
@@ -109,7 +112,7 @@ def mainWindow(page: ft.Page):
     page.scroll = ft.ScrollMode.AUTO
     page.add(contentRow)
     page.on_resize = page_resize
-
+    page.window_maximized = True
     page.update()
 
 
