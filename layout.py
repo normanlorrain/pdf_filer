@@ -110,15 +110,6 @@ def mainWindow(
     logic.nextFile(None)
     page.update()
 
-    # def on_message(msg):
-    #     print(msg)
-    #     page.update()
-
-    # page.pubsub.subscribe(on_message)  # type: ignore
-    # print("sending")
-    # page.pubsub.send_all("Test Messsage")  # type: ignore
-    # print("Sent")
-
 
 def radioButtonFileTypes() -> list:
     return list(
