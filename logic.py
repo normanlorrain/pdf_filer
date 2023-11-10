@@ -12,7 +12,7 @@ import util
 
 def alert(text):
     dlg = ft.AlertDialog(
-        title=ft.Text(text), on_dismiss=lambda e: print("Dialog dismissed!")
+        title=ft.Text(text), on_dismiss=lambda e: status("Dialog dismissed!")
     )
     layout._page.dialog = dlg
     dlg.open = True
@@ -25,11 +25,13 @@ def createMatchRadioButtons(nameTuple) -> list:
     return list(map(lambda match: ft.Radio(value=match[1], label=match[0]), matches))
 
 
-def nextFile(e: ControlEvent | None):
-    pass
+def nextFile(e: ControlEvent):
+    global page
+    if e:
+        page = e.page
     try:
         path = src.getNextFile()
-        pdf.currentFile = pdf.pdf(path)
+        pdf.currentFile = pdf.pdf(path, status=status)
         nameTuple = pdf.currentFile.scanForName()
     except StopIteration:
         alert("Last file!")
@@ -79,7 +81,7 @@ def onMoveBtn(e):
     refs.btnMoveFile.current.disabled = True
     e.page.update()
 
-    print(
+    status(
         f"Logic: Move file: {refs.txtSrcFileName.current.value} , {refs.txtDstFileName.current.value}"
     )
 
@@ -91,7 +93,7 @@ def onMoveBtn(e):
         suffix = dstFile.suffix
         stem = dstFile.stem  # e.g. c:\folder\folder\{stem}.pdf
         newStem = util.incrementStem(stem)
-        print(f"Destination file exists.  Trying new stem: {newStem}")
+        status(f"Destination file exists.  Trying new stem: {newStem}")
         dstFile = dstFile.with_stem(newStem)
 
     srcFile.rename(dstFile)
@@ -103,14 +105,14 @@ def onMoveBtn(e):
 
 
 def onMatchSelection(e):
-    print(f"Match selected: {refs.rgNameMatches.current.value}")
+    status(f"Match selected: {refs.rgNameMatches.current.value}")
     updateDestination(e)
     e.page.update()
     pass
 
 
 def onTypeSelection(e):
-    print(f"Type selected: {refs.rgFileType.current.value}")
+    status(f"Type selected: {refs.rgFileType.current.value}")
     updateDestination(e)
     e.page.update()
     pass
@@ -152,6 +154,19 @@ def updateDestination(e):
     refs.btnMoveFile.current.disabled = False
     e.page.update()
 
+
+def status(text, end=None):
+    global page
+    if status._end or status._end == "":
+        refs.txtStatus.current.value = str(refs.txtStatus.current.value) + str(text)
+    else:
+        refs.txtStatus.current.value = str(text)
+    status._end = end
+    if page:
+        page.update()
+
+
+status._end = None
 
 if __name__ == "__main__":
     pass

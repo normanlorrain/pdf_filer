@@ -15,13 +15,7 @@ def windowEvent(e):
         e.page.window_destroy()
 
 
-def mainWindow(
-    page: ft.Page,
-    onNextBtn=logic.nextFile,
-    onPgUp=logic.onPgUp,
-    onPgDown=logic.onPgDown,
-    onMoveBtn=logic.onMoveBtn,
-):
+def mainWindow(page: ft.Page):
     global _page
     _page = page
 
@@ -38,21 +32,22 @@ def mainWindow(
     # page.window_resizable = False  # window is not resizable
 
     btnNext = ft.TextButton(
-        ref=refs.btnNext, text="Next PDF", on_click=onNextBtn, disabled=False
+        ref=refs.btnNext, text="Next PDF", on_click=logic.nextFile, disabled=False
     )
     bntUp = ft.TextButton(
         ref=refs.btnUp,
         text="PgUp",
-        on_click=onPgUp,
+        on_click=logic.onPgUp,
         disabled=True,
     )
     bntDn = ft.TextButton(
         ref=refs.btnDown,
         text="PgDn",
-        on_click=onPgDown,
+        on_click=logic.onPgDown,
         disabled=True,
     )
-    buttonRow = ft.Row(spacing=0, controls=[btnNext, bntUp, bntDn])
+    txtStatus = ft.Text(ref=refs.txtStatus)
+    buttonRow = ft.Row(spacing=0, controls=[btnNext, bntUp, bntDn, txtStatus])
     page.add(buttonRow)
 
     contentRow = ft.Row(
@@ -92,7 +87,7 @@ def mainWindow(
                     ft.ElevatedButton(
                         ref=refs.btnMoveFile,
                         text="Move File",
-                        on_click=onMoveBtn,
+                        on_click=logic.onMoveBtn,
                         disabled=True,
                     ),
                 ],
@@ -106,8 +101,6 @@ def mainWindow(
     page.add(contentRow)
     page.views
 
-    page.update()
-    logic.nextFile(None)
     page.update()
 
 

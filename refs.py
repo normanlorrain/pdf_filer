@@ -5,6 +5,7 @@ import flet as ft
 btnNext = ft.Ref[ft.TextButton]()
 btnUp = ft.Ref[ft.TextButton]()
 btnDown = ft.Ref[ft.TextButton]()
+txtStatus = ft.Ref[ft.Text]()
 
 imgPDF = ft.Ref[ft.Image]()
 colDestination = ft.Ref[ft.Column]()  # The right-hand column, containing these:

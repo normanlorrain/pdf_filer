@@ -10,8 +10,9 @@ print(fitz.__doc__)
 
 
 class pdf:
-    def __init__(self, fname):
+    def __init__(self, fname: str, status):
         self.name = fname
+        self.status = status
         inputFile = open(fname, "rb")
         bytes = inputFile.read()
         inputFile.close()
@@ -21,7 +22,7 @@ class pdf:
         self.page_count = len(self.doc)
         self.currentPage = 1
 
-        print(f"PDF init: {fname}, {self.page_count} pages")
+        self.status(f"PDF init: {fname}, {self.page_count} pages")
 
     def __del__(self):
         pass
@@ -35,14 +36,14 @@ class pdf:
         )  # *, matrix: matrix_like = Identity, dpi=None, colorspace: Colorspace = csRGB, clip: rect_like = None, alpha: bool = False, annots: bool = True)
         width = pixmap.width
         height = pixmap.height
-        print(f"get page {self.currentPage}: {width} x {height}")
+        self.status(f"{self.name} : page {self.currentPage}")
         bytes = pixmap.tobytes()
         enc = base64.b64encode(bytes)
         strEnc = enc.decode("ascii")
         return strEnc
 
     def pageDn(self):
-        print(f"PDF pageDn: {self.name}")
+        self.status(f"PDF pageDn: {self.name}")
 
         if self.currentPage < self.doc.page_count:
             self.currentPage += 1
@@ -64,9 +65,9 @@ class pdf:
         # doc = fitz.Document(stream=bytes)
         # page = doc.load_page(4)
         match = None
-        print(f"Scanning {self.doc.page_count} pages:", end="")
+        self.status(f"Scanning {self.doc.page_count} pages:", end="")
         for page in self.doc.pages():
-            print(f" {page.number +1} ", end="")
+            self.status(f" {page.number +1} ", end="")
             textpage = page.get_textpage_ocr(
                 tessdata="C:\\Program Files\\Tesseract-OCR\\tessdata",
                 full=True,
@@ -94,8 +95,8 @@ class pdf:
             fullName = match.group(1)
             (last, first) = util.splitName(fullName)
 
-            print(f"   NAME:  {last}, {first}")
+            self.status(f"   NAME:  {last}, {first}")
             return (last, first)
         else:
-            print(f"no name found.")
+            self.status(f"no name found.")
             return None
