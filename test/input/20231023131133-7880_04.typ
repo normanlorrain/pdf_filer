@@ -1,5 +1,5 @@
-= Test File 2 - the rabbit
-== for ElmTre Clinic IT department PDF Filer project
+= Test File (what's up doc)
+== for PDF Filer project
 created with #link("https://typst.app/docs")[Typst]
 
 #lorem(300)
