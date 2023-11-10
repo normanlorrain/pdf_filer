@@ -54,17 +54,26 @@ def mainWindow(page: ft.Page):
         scroll=ft.ScrollMode.ALWAYS,
         controls=[
             ft.Column(
-                controls=[ft.Image(ref=refs.imgPDF)],
+                controls=[ft.Image(ref=refs.imgPDF, fit=ft.ImageFit.FIT_WIDTH)],
                 scroll=ft.ScrollMode.ALWAYS,
+                width=1000,
             ),
             ft.Column(
                 ref=refs.colDestination,
                 controls=[
                     ft.Text(ref=refs.txtSrcFileName, value="src filename"),
-                    ft.Text(
-                        ref=refs.txtNameDetected,
-                        value="Name detected here",
-                        weight=ft.FontWeight.BOLD,
+                    ft.Row(
+                        controls=[
+                            ft.Text(
+                                ref=refs.txtNameDetected,
+                                value="Name detected here",
+                                weight=ft.FontWeight.BOLD,
+                            ),
+                            ft.TextField(
+                                ref=refs.tfNameEntry,
+                                on_change=logic.onNameEntry,
+                            ),
+                        ]
                     ),
                     ft.Text(value="Candidate matches:"),
                     ft.RadioGroup(
@@ -99,9 +108,13 @@ def mainWindow(page: ft.Page):
     )
     page.scroll = ft.ScrollMode.AUTO
     page.add(contentRow)
-    page.views
+    page.on_resize = page_resize
 
     page.update()
+
+
+def page_resize(e):
+    print("New page size:", e.page.window_width, e.page.window_height)
 
 
 def radioButtonFileTypes() -> list:

@@ -55,7 +55,7 @@ def nextFile(e: ControlEvent):
         refs.rgNameMatches.current.value = ""  # IMPORTANT
         refs.rgcNameMatches.current.controls = createMatchRadioButtons(nameTuple)
     else:
-        refs.txtNameDetected.current.value = "NO NAME FOUND"
+        refs.txtNameDetected.current.value = "NONE.  Try manual: "
         refs.rgNameMatches.current.value = ""
         refs.rgcNameMatches.current.controls = None
     refs.txtDstFileName.current.value = "Destination filename here"
@@ -101,6 +101,20 @@ def onMoveBtn(e):
     refs.txtSrcFileName.current.value = None
     refs.imgPDF.current.src_base64 = None
     nextFile(e)
+    e.page.update()
+
+
+def onNameEntry(e):
+    last = refs.tfNameEntry.current.value
+    if "," in last:
+        last, first = name.split(",")
+    else:
+        first = ""
+    refs.rgNameMatches.current.value = ""  # IMPORTANT
+    matches = dst.getCloseNames(last.upper(), first)
+    refs.rgcNameMatches.current.controls = list(
+        map(lambda match: ft.Radio(value=match[1], label=match[0]), matches)
+    )
     e.page.update()
 
 

@@ -11,6 +11,7 @@ imgPDF = ft.Ref[ft.Image]()
 colDestination = ft.Ref[ft.Column]()  # The right-hand column, containing these:
 txtSrcFileName = ft.Ref[ft.Text]()  #      - The name of the original file
 txtNameDetected = ft.Ref[ft.Text]()  #      - The patient name detected in the file
+tfNameEntry = ft.Ref[ft.TextField]()  #     - A place to enter a name manually
 rgNameMatches = ft.Ref[ft.RadioGroup]()  #  - Selectable matches for that name.
 rgcNameMatches = ft.Ref[ft.Column]()  #      + A column of radio buttons for the matches
 rgFileType = ft.Ref[ft.RadioGroup]()  #     - Selectable type for this file
