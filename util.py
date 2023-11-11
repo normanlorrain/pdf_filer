@@ -1,4 +1,6 @@
 import re
+import sys
+from pathlib import Path
 
 
 def splitName(fullName):
@@ -43,6 +45,17 @@ def incrementStem(stem: str):
     else:
         incremented = stem + "(1)"
     return incremented
+
+
+# For projects with PyInstaller
+# See https://www.pyinstaller.org/en/stable/runtime-information.html#run-time-information
+def findDataFile(filename):
+    if getattr(sys, "frozen", False) and hasattr(sys, "_MEIPASS"):
+        print("running in a PyInstaller bundle")
+        return Path(sys._MEIPASS).joinpath(filename)
+    else:
+        print("running in a normal Python process")
+        return Path(__file__).parent.joinpath(filename)
 
 
 if __name__ == "__main__":

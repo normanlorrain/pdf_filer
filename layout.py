@@ -3,7 +3,13 @@ import refs
 import logic
 import config
 
+import util
+
+
 _page = None
+
+SPLASH = "images/wings2.png"
+splash = util.findDataFile(SPLASH)
 
 
 # We need to catch the window close event, so that we can clean up.  It's not automatic, sadly.
@@ -46,7 +52,7 @@ def mainWindow(page: ft.Page):
         on_click=logic.onPgDown,
         disabled=True,
     )
-    txtStatus = ft.Text(ref=refs.txtStatus)
+    txtStatus = ft.Text(ref=refs.txtStatus, value="Ready to start.")
     buttonRow = ft.Row(spacing=0, controls=[btnNext, bntUp, bntDn, txtStatus])
     page.add(buttonRow)
 
@@ -56,7 +62,7 @@ def mainWindow(page: ft.Page):
         controls=[
             ft.Column(
                 controls=[
-                    ft.Image(ref=refs.imgPDF, src="OIG.jpg", fit=ft.ImageFit.FIT_WIDTH)
+                    ft.Image(ref=refs.imgPDF, src=splash, fit=ft.ImageFit.FIT_WIDTH)
                 ],
                 scroll=ft.ScrollMode.ALWAYS,
                 width=1000,

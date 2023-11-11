@@ -8,5 +8,6 @@ Configuration file also defines the types of file, to determine the final naming
 
 
 
-# splash image terms of use 
-https://www.bing.com/new/termsofuse?FORM=GENTOS
+# Images
+* [Source](https://www.bing.com/images/create/a-file-folder-with-wings-flying-towards-a-cabinet/654f064f94a3414c82be40119bd626a4?id=G4%2fSDisHSXQecYcZHbuizw%3d%3d&view=detailv2&idpp=genimg&FORM=GCRIDP&ajaxhist=0&ajaxserp=0)
+* [Terms of Use](https://www.bing.com/new/termsofuse?FORM=GENTOS)
