@@ -1,5 +1,6 @@
 pymupdf
 flet
+pyinstaller
 
 # pytesseract  Don't use; PyMuPDF has access to tesseract.  But it's weird.
 # black  # instead Use https://marketplace.visualstudio.com/items?itemName=ms-python.black-formatter
