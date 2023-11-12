@@ -70,7 +70,7 @@ class pdf:
             self.status(f" {page.number +1} ", end="")
             textpage = page.get_textpage_ocr(
                 tessdata="C:\\Program Files\\Tesseract-OCR\\tessdata",
-                full=False,   # Tested, and give better results
+                full=False,  # Tested, and give better results.  I think full=True causes a full rendering of the page, losing information.  With False, I think no rendering, therefore images are OCR'd at original resolution.
                 dpi=72,  # Tested.  300 is no better (slower likely)
                 # flags= 0
             )
