@@ -70,8 +70,8 @@ class pdf:
             self.status(f" {page.number +1} ", end="")
             textpage = page.get_textpage_ocr(
                 tessdata="C:\\Program Files\\Tesseract-OCR\\tessdata",
-                full=True,
-                dpi=300,
+                full=False,   # Tested, and give better results
+                dpi=72,  # Tested.  300 is no better (slower likely)
                 # flags= 0
             )
             contents = textpage.extractText()
