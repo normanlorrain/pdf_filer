@@ -100,3 +100,29 @@ class pdf:
         else:
             self.status(f"no name found.")
             return None
+
+
+# Future enhancement: scan with pytesseract
+# Rationale: pymupdf's implementation effectively renders the page at a lower resolution
+# than the images in the pdf.  Since we're dealing with faxes (scans) we
+# should get better results by pulling the full resolution images from
+# the pdf and calling pytesseract ourselves.  I've confirmed this works, but would
+# like to test further.
+############################################################
+# import fitz
+# import pytesseract
+# from io import BytesIO
+
+
+# from PIL import Image
+# images = doc.get_page_images(1)
+
+# for (xref, _, _, _, _, _, _, _, _)  in images:
+#     img = doc.extract_image(xref=xref)
+#     bytes = BytesIO( initial_bytes=img['image'])
+#     img = Image.open(bytes) #,size=(width,height)
+#     img.save(f'PIL_xref {xref}.png')
+#     text = pytesseract.image_to_string(img)
+
+
+#     pass
