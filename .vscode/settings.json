@@ -5,6 +5,7 @@
     "editor.formatOnSave": true,
     "python.languageServer": "Pylance",
     "cSpell.words": [
-        "flet"
+        "flet",
+        "pytesseract"
     ],
 }
