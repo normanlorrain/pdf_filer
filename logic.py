@@ -105,11 +105,11 @@ def onMoveBtn(e):
 
 
 def onNameEntry(e):
-    last = refs.tfNameEntry.current.value
-    if "," in last:
+    name = refs.tfNameEntry.current.value
+    if "," in name:
         last, first = name.split(",")
     else:
-        first = ""
+        last, first = name, ""
     refs.rgNameMatches.current.value = ""  # IMPORTANT
     matches = dst.getCloseNames(last.upper(), first)
     refs.rgcNameMatches.current.controls = list(
