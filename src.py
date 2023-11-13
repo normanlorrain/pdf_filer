@@ -1,9 +1,5 @@
-import re
 import glob
 
-import pdf
-
-import util
 import config
 
 scrDir = config.config["SRC"]["DIR"]
