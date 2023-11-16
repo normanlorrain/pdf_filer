@@ -1,11 +1,20 @@
 {
-    "python.analysis.typeCheckingMode": "off",
+    "python.analysis.typeCheckingMode": "basic",
     "python.analysis.autoImportCompletions": false,
+    "python.analysis.diagnosticMode":"workspace",
     "editor.defaultFormatter": "ms-python.black-formatter",
     "editor.formatOnSave": true,
     "python.languageServer": "Pylance",
     "cSpell.words": [
+        "colorspace",
+        "fitz",
         "flet",
-        "pytesseract"
+        "MEIPASS",
+        "pixmap",
+        "pytesseract",
+        "tessdata",
+        "Tesseract",
+        "textpage",
+        "tobytes"
     ],
 }

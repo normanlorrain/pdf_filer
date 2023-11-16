@@ -52,7 +52,7 @@ def incrementStem(stem: str):
 def findDataFile(filename):
     if getattr(sys, "frozen", False) and hasattr(sys, "_MEIPASS"):
         print("running in a PyInstaller bundle")
-        return Path(sys._MEIPASS).joinpath(filename)
+        return Path(sys._MEIPASS).joinpath(filename)  # type: ignore
     else:
         print("running in a normal Python process")
         return Path(__file__).parent.joinpath(filename)

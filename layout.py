@@ -62,7 +62,7 @@ def mainWindow(page: ft.Page):
         controls=[
             ft.Column(
                 controls=[
-                    ft.Image(ref=refs.imgPDF, src=splash, fit=ft.ImageFit.FIT_WIDTH)
+                    ft.Image(ref=refs.imgPDF, src=splash, fit=ft.ImageFit.FIT_WIDTH)  # type: ignore
                 ],
                 scroll=ft.ScrollMode.ALWAYS,
                 width=1000,

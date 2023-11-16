@@ -51,7 +51,7 @@ def nextFile(e: ControlEvent):
 
     # Set working fields
     if nameTuple:
-        refs.txtNameDetected.current.value = nameTuple
+        refs.txtNameDetected.current.value = str(nameTuple)
         refs.rgNameMatches.current.value = ""  # IMPORTANT
         refs.rgcNameMatches.current.controls = createMatchRadioButtons(nameTuple)
     else:
@@ -85,8 +85,8 @@ def onMoveBtn(e):
         f"Logic: Move file: {refs.txtSrcFileName.current.value} , {refs.txtDstFileName.current.value}"
     )
 
-    srcFile = Path(refs.txtSrcFileName.current.value)
-    dstFile = Path(refs.txtDstFileName.current.value)
+    srcFile = Path(str(refs.txtSrcFileName.current.value))
+    dstFile = Path(str(refs.txtDstFileName.current.value))
 
     i = 1
     while dstFile.exists():
@@ -105,7 +105,7 @@ def onMoveBtn(e):
 
 
 def onNameEntry(e):
-    name = refs.tfNameEntry.current.value
+    name = str(refs.tfNameEntry.current.value)
     if "," in name:
         last, first = name.split(",")
     else:
@@ -136,7 +136,7 @@ def updateDestination(e):
     refs.btnMoveFile.current.disabled = True
 
     # The Radio Group value for matched name has the destination folder
-    dstFolder = refs.rgNameMatches.current.value
+    dstFolder = str(refs.rgNameMatches.current.value)
 
     # The Radio Group value selected type contains the format string
     nameFormat = refs.rgFileType.current.value

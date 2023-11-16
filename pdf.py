@@ -4,7 +4,6 @@ import re
 
 import util
 
-currentFile = None
 
 print(fitz.__doc__)
 
@@ -33,7 +32,7 @@ class pdf:
         zoom = 2
         pixmap = self.doc.get_page_pixmap(  # type: ignore
             self.currentPage - 1, matrix=fitz.Matrix(zoom, zoom)
-        )  # *, matrix: matrix_like = Identity, dpi=None, colorspace: Colorspace = csRGB, clip: rect_like = None, alpha: bool = False, annots: bool = True)
+        )
         width = pixmap.width
         height = pixmap.height
         self.status(f"{self.name} : page {self.currentPage}")
@@ -102,8 +101,11 @@ class pdf:
             return None
 
 
+currentFile: pdf
+
+
 # Future enhancement: scan with pytesseract
-# Rationale: pymupdf's implementation effectively renders the page at a lower resolution
+# Rationale: PyMuPDF's implementation effectively renders the page at a lower resolution
 # than the images in the pdf.  Since we're dealing with faxes (scans) we
 # should get better results by pulling the full resolution images from
 # the pdf and calling pytesseract ourselves.  I've confirmed this works, but would
