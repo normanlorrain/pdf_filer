@@ -1,28 +1,33 @@
 import glob
+from typing import Iterator
 
 import config
 
 scrDir = config.config["SRC"]["DIR"]
-filename_nameTuple_dict = {}
+_iterator: Iterator
 
 
 def init():
-    listFiles()
-    global fileIterator
-    fileIterator = iter(filename_nameTuple_dict)
+    global _iterator
+    _iterator = listFiles()
 
 
 def getNextFile():
-    return next(fileIterator)
+    return next(_iterator)
 
 
 def listFiles():
-    global filename_nameTuple_dict
-    filename_nameTuple_dict = {}
     for fname in glob.glob(f"{scrDir}\\*.pdf"):
-        filename_nameTuple_dict[fname] = None
+        yield fname
 
 
 if __name__ == "__main__":
     init()
+    while True:
+        try:
+            path = getNextFile()
+            print(path)
+        except StopIteration:
+            print("no more files.  Restarting.")
+            init()
     pass
