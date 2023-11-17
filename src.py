@@ -9,16 +9,11 @@ _iterator: Iterator
 
 def init():
     global _iterator
-    _iterator = listFiles()
+    _iterator = iter(glob.glob(f"{scrDir}\\*.pdf"))
 
 
 def getNextFile():
     return next(_iterator)
-
-
-def listFiles():
-    for fname in glob.glob(f"{scrDir}\\*.pdf"):
-        yield fname
 
 
 if __name__ == "__main__":
