@@ -23,15 +23,6 @@ def listFiles():
         filename_nameTuple_dict[fname] = None
 
 
-# def scanFile(fname):
-#     print(f"Scanning file {fname}")
-#     inputFile = open(fname, "rb")
-#     bytes = inputFile.read()
-#     inputFile.close()
-
-#     filename_nameTuple_dict[fname] = scanPDFContents(bytes)
-
-
 if __name__ == "__main__":
     init()
     pass
