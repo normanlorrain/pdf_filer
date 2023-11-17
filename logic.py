@@ -178,7 +178,7 @@ def updateDestination(e):
 
 
 # Behave like print()
-def status(text: str, end: str = None) -> None:
+def status(text: str, end: str | None = None) -> None:
     # if previous call didn't specify an ending, (line break), just replace:
     if status._end == None:
         refs.txtStatus.current.value = str(text)
