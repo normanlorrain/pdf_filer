@@ -9,7 +9,7 @@ import config as cfg
 
 dstUsers = cfg.config["DST"]
 
-patientFolders = {}
+patientFolders: dict[str, str] = {}
 
 
 def init():
@@ -26,12 +26,12 @@ def init():
 #         return None
 
 
-def getCloseNames(last: str, first: str):
+def getCloseNames(last: str, first: str) -> list[tuple[str, str]]:
     closeNames = difflib.get_close_matches(f"{last}::{first}", patientFolders)
     return list(map(lambda name: (name, patientFolders[name]), closeNames))
 
 
-def generateDstDate(unknownPath):
+def generateDstDate(unknownPath: str) -> str:
     path = Path(unknownPath).name
     format = "%Y%m%d"
     date = datetime.datetime.strptime(path[0:8], format).date()
