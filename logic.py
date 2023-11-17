@@ -34,11 +34,19 @@ def nextFile(e):
         pdf.currentFile = pdf.pdf(path, status=status)
         nameTuple = pdf.currentFile.scanForName()
     except StopIteration:
-        alert("No more files!")
+        pdf.currentFile = None
         src.init()
+        refs.imgPDF.current.src_base64 = None
+        refs.imgPDF.current.src = util.findDataFile("images/wings2.png")
+        refs.btnDown.current.disabled = True
+        refs.btnUp.current.disabled = True
+        status("Last file or no more files!")
+        e.page.update()
         return
+
     refs.txtSrcFileName.current.value = path
     global currentFile
+    refs.imgPDF.current.src = None
     refs.imgPDF.current.src_base64 = pdf.currentFile.get_page()
 
     # Set toolbar buttons
