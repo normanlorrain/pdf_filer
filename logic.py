@@ -34,7 +34,7 @@ def nextFile(e):
         pdf.currentFile = pdf.pdf(path, status=status)
         nameTuple = pdf.currentFile.scanForName()
     except StopIteration:
-        alert("Last file!")
+        alert("No more files!")
         src.init()
         return
     refs.txtSrcFileName.current.value = path
@@ -178,7 +178,7 @@ def status(text: str, end: str = None) -> None:
     # otherwise append to the control
     else:
         refs.txtStatus.current.value = (
-            str(refs.txtStatus.current.value) + staus_end + str(text)
+            str(refs.txtStatus.current.value) + status._end + str(text)
         )
 
     # save state for next call
