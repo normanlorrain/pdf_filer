@@ -10,7 +10,7 @@ print(fitz.__doc__)
 
 
 class pdf:
-    def __init__(self, fname: str, status: Callable[[str], None]):
+    def __init__(self, fname: str, status: Callable):
         self.name = fname
         self.status = status
         inputFile = open(fname, "rb")

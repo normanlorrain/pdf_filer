@@ -1,6 +1,6 @@
 from pathlib import Path
 import flet as ft
-from flet_core.control_event import ControlEvent
+from typing import Optional
 
 import refs
 import src
@@ -25,7 +25,7 @@ def createMatchRadioButtons(nameTuple) -> list:
     return list(map(lambda match: ft.Radio(value=match[1], label=match[0]), matches))
 
 
-def nextFile(e: ControlEvent):
+def nextFile(e):
     global page
     if e:
         page = e.page
@@ -169,13 +169,21 @@ def updateDestination(e):
     e.page.update()
 
 
-def status(text, end=None) -> None:
-    global page
-    if status._end or status._end == "":
-        refs.txtStatus.current.value = str(refs.txtStatus.current.value) + str(text)
-    else:
+# Behave like print()
+def status(text: str, end: str = None) -> None:
+    # if previous call didn't specify an ending, (line break), just replace:
+    if status._end == None:
         refs.txtStatus.current.value = str(text)
+
+    # otherwise append to the control
+    else:
+        refs.txtStatus.current.value = (
+            str(refs.txtStatus.current.value) + staus_end + str(text)
+        )
+
+    # save state for next call
     status._end = end
+    global page
     if page:
         page.update()
 
