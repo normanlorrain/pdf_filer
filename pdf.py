@@ -1,6 +1,7 @@
 import base64
 import fitz
 import re
+from typing import Callable
 
 import util
 
@@ -9,7 +10,7 @@ print(fitz.__doc__)
 
 
 class pdf:
-    def __init__(self, fname: str, status):
+    def __init__(self, fname: str, status: Callable[[str], None]):
         self.name = fname
         self.status = status
         inputFile = open(fname, "rb")
@@ -28,13 +29,10 @@ class pdf:
 
     # read the page data
     def get_page(self):
-        global width, height
         zoom = 2
         pixmap = self.doc.get_page_pixmap(  # type: ignore
             self.currentPage - 1, matrix=fitz.Matrix(zoom, zoom)
         )
-        width = pixmap.width
-        height = pixmap.height
         self.status(f"{self.name} : page {self.currentPage}")
         bytes = pixmap.tobytes()
         enc = base64.b64encode(bytes)

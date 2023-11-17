@@ -10,7 +10,7 @@ import layout
 import util
 
 
-def alert(text):
+def alert(text: str):
     dlg = ft.AlertDialog(
         title=ft.Text(text), on_dismiss=lambda e: status("Dialog dismissed!")
     )
@@ -169,7 +169,7 @@ def updateDestination(e):
     e.page.update()
 
 
-def status(text, end=None):
+def status(text, end=None) -> None:
     global page
     if status._end or status._end == "":
         refs.txtStatus.current.value = str(refs.txtStatus.current.value) + str(text)
