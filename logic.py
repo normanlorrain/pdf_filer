@@ -58,6 +58,7 @@ def nextFile(e):
         refs.btnUp.current.disabled = True
 
     # Set working fields
+    refs.tfNameEntry.current.value = None
     if nameTuple:
         refs.txtNameDetected.current.value = str(nameTuple)
         refs.rgNameMatches.current.value = ""  # IMPORTANT
@@ -107,6 +108,7 @@ def onMoveBtn(e):
     srcFile.rename(dstFile)
 
     refs.txtSrcFileName.current.value = None
+    refs.tfNameEntry.current.value = None
     refs.imgPDF.current.src_base64 = None
     nextFile(e)
     e.page.update()
