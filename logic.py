@@ -96,14 +96,7 @@ def onMoveBtn(e):
 
     srcFile = Path(str(refs.txtSrcFileName.current.value))
     dstFile = Path(str(refs.txtDstFileName.current.value))
-
-    i = 1
-    while dstFile.exists():
-        suffix = dstFile.suffix
-        stem = dstFile.stem  # e.g. c:\folder\folder\{stem}.pdf
-        newStem = util.incrementStem(stem)
-        status(f"Destination file exists.  Trying new stem: {newStem}")
-        dstFile = dstFile.with_stem(newStem)
+    dstFile = util.generateSafeFilename(dstFile)
 
     srcFile.rename(dstFile)
 

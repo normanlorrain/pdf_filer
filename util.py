@@ -36,6 +36,17 @@ def splitName(fullName: str) -> tuple[str, str]:
     return (last, first)
 
 
+# For projects with PyInstaller
+# See https://www.pyinstaller.org/en/stable/runtime-information.html#run-time-information
+def findDataFile(filename: str) -> Path:
+    if getattr(sys, "frozen", False) and hasattr(sys, "_MEIPASS"):
+        print("running in a PyInstaller bundle")
+        return Path(sys._MEIPASS).joinpath(filename)  # type: ignore
+    else:
+        print("running in a normal Python process")
+        return Path(__file__).parent.joinpath(filename)
+
+
 # e.g. c:\folder\folder\{stem}.pdf
 def incrementStem(stem: str) -> str:
     match = re.match(r"(.*)\((\d+)\)$", stem)
@@ -47,15 +58,15 @@ def incrementStem(stem: str) -> str:
     return incremented
 
 
-# For projects with PyInstaller
-# See https://www.pyinstaller.org/en/stable/runtime-information.html#run-time-information
-def findDataFile(filename: str) -> Path:
-    if getattr(sys, "frozen", False) and hasattr(sys, "_MEIPASS"):
-        print("running in a PyInstaller bundle")
-        return Path(sys._MEIPASS).joinpath(filename)  # type: ignore
-    else:
-        print("running in a normal Python process")
-        return Path(__file__).parent.joinpath(filename)
+def generateSafeFilename(dstFile):
+    i = 1
+    while dstFile.exists():
+        suffix = dstFile.suffix
+        stem = dstFile.stem  # e.g. c:\folder\folder\{stem}.pdf
+        newStem = incrementStem(stem)
+        # status(f"Destination file exists.  Trying new stem: {newStem}")
+        dstFile = dstFile.with_stem(newStem)
+    return dstFile
 
 
 if __name__ == "__main__":
