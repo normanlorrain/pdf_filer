@@ -136,6 +136,11 @@ def onMatchSelection(e):
 def onTypeSelection(e):
     status(f"Type selected: {refs.rgFileType.current.value}")
     updateDestination(e)
+    if refs.rgFileType.current.value == refs.OTHER:
+        refs.tfFileTypeOther.current.disabled = False
+    else:
+        refs.tfFileTypeOther.current.disabled = True
+
     e.page.update()
     pass
 

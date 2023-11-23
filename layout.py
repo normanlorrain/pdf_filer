@@ -133,7 +133,7 @@ def radioButtonFileTypes() -> list:
             config.config["TYPES"].items(),
         )
     )
-    radioButtonList.append(ft.Radio(value="{other} faxed {date}", label="other"))
+    radioButtonList.append(ft.Radio(value=refs.OTHER, label="other"))
     return radioButtonList
 
 
