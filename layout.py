@@ -127,12 +127,14 @@ def page_resize(e):
 
 
 def radioButtonFileTypes() -> list:
-    return list(
+    radioButtonList = list(
         map(
             lambda item: ft.Radio(value=item[1], label=item[0]),
             config.config["TYPES"].items(),
         )
     )
+    radioButtonList.append(ft.Radio(value="{other} faxed {date}", label="other"))
+    return radioButtonList
 
 
 def start():
