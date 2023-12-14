@@ -89,11 +89,15 @@ class pdf:
 
         if match:
             # (last, first)
-            fullName = match.group(1)
-            (last, first) = util.splitName(fullName)
+            try:
+                fullName = match.group(1)
+                (last, first) = util.splitName(fullName)
 
-            self.status(f"   NAME:  {last}, {first}")
-            return (last, first)
+                self.status(f"   NAME:  {last}, {first}")
+                return (last, first)
+            except:
+                self.status(f"no name found.")
+                return None
         else:
             self.status(f"no name found.")
             return None
