@@ -19,6 +19,9 @@ rgcFileType = ft.Ref[ft.Column]()  #         + A column of radio buttons for the
 tfFileTypeOther = ft.Ref[ft.TextField]()  # - Other type of file
 txtDstFileName = ft.Ref[ft.Text]()  #       - The destination file name
 btnMoveFile = ft.Ref[ft.ElevatedButton]()
+btnDefault = ft.Ref[ft.ElevatedButton]()  #   - Putting non-patients in "default" dir
+dlgDefault = ft.Ref[ft.FilePicker]()  # File picker
+
 
 # String used by the file Type radio group.  Need reference to it.
 OTHER = "{other} faxed {date}"

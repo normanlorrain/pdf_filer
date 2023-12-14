@@ -8,6 +8,7 @@ import dst
 import pdf
 import layout
 import util
+import config as cfg
 
 
 def alert(text: str):
@@ -138,6 +139,21 @@ def onTypeSelection(e):
 
     e.page.update()
     pass
+
+
+def onDefaultBtn(e):
+    path = Path(refs.txtSrcFileName.current.value)
+    file_name = f"Fax sent {dst.generateDstDate(path)}"
+    initial_directory = cfg.config["DEFAULT"]
+    refs.dlgDefault.current.save_file(
+        file_name=file_name, initial_directory=initial_directory
+    )
+
+
+def onDefaultResult(e):
+    dstFile = e.control.result.path
+    srcFile = Path(str(refs.txtSrcFileName.current.value))
+    srcFile.rename(dstFile)
 
 
 def updateDestination(e):

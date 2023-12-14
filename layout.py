@@ -21,6 +21,9 @@ def windowEvent(e):
         e.page.window_destroy()
 
 
+defaultDlg = ft.FilePicker(ref=refs.dlgDefault, on_result=logic.onDefaultResult)
+
+
 def mainWindow(page: ft.Page):
     global _page
     _page = page
@@ -108,6 +111,12 @@ def mainWindow(page: ft.Page):
                         on_click=logic.onMoveBtn,
                         disabled=True,
                     ),
+                    ft.ElevatedButton(
+                        ref=refs.btnDefault,
+                        text="Non-patient",
+                        on_click=logic.onDefaultBtn,
+                        disabled=False,
+                    ),
                 ],
                 alignment=ft.MainAxisAlignment.START,
             ),
@@ -116,6 +125,7 @@ def mainWindow(page: ft.Page):
         # scroll=ft.ScrollMode.AUTO,
     )
     page.scroll = ft.ScrollMode.AUTO
+    page.overlay.extend([defaultDlg])
     page.add(contentRow)
     page.on_resize = page_resize
     page.window_maximized = True
