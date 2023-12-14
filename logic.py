@@ -152,8 +152,11 @@ def onDefaultBtn(e):
 
 def onDefaultResult(e):
     dstFile = e.control.result.path
-    srcFile = Path(str(refs.txtSrcFileName.current.value))
-    srcFile.rename(dstFile)
+    if dstFile:
+        srcFile = Path(str(refs.txtSrcFileName.current.value))
+        srcFile.rename(dstFile)
+        nextFile(e)
+        e.page.update()
 
 
 def updateDestination(e):
