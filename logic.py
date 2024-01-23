@@ -34,7 +34,7 @@ def nextFile(e):
         path = src.getNextFile()
         pdf.currentFile = pdf.pdf(path, status=status)
         nameTuple = pdf.currentFile.scanForName()
-    except StopIteration:
+    except (StopIteration, FileNotFoundError):
         pdf.currentFile = None
         src.init()
         refs.imgPDF.current.src_base64 = None
