@@ -28,7 +28,7 @@ def mainWindow(page: ft.Page):
     global _page
     _page = page
 
-    page.window_center()
+    # page.window_center()
     page.on_window_event = windowEvent
     page.window_prevent_close = True
 
