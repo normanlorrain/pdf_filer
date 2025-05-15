@@ -15,8 +15,13 @@ patientFolders: dict[str, str] = {}
 def init():
     for root in dstUsers.values():
         for folder in glob.glob("*", root_dir=root):
-            (last, first) = util.splitName(folder)
-            patientFolders[f"{last}::{first}"] = os.path.join(root, folder)
+            folder_path = os.path.join(root, folder)
+            if os.path.isdir(folder_path):
+                (last, first) = util.splitName(folder)
+                patientFolders[f"{last}::{first}"] = folder_path
+            else:
+                print(f"Warning: {folder_path} is not a directory")
+            
 
 
 # def getName(last: str, first: str):
